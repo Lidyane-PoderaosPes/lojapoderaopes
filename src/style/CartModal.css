@@ -1,0 +1,139 @@
+.cart-container {
+    width: 100%; /* Mantém a largura desejada para o carrinho */
+    margin: 0 auto; /* Centraliza o container do carrinho */
+    background-color: #FFFFFF; /* Fundo branco */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  .orh {
+    display: flex; /* Usar flexbox para organizar os cartões */
+    flex-wrap: wrap; /* Permite que os cartões quebrem para a próxima linha, se necessário */
+    justify-content: space-around; /* Espaçamento entre os cartões */
+  }
+  
+  .cart-card {
+    transition: transform 0.2s;
+    border: 1px solid #F5F5F5; /* Borda leve */
+    border-radius: 8px; /* Bordas arredondadas */
+    width: calc(33.33% - 20px); /* Largura dos cartões: três por linha com espaço entre eles */
+    margin-bottom: 20px; /* Espaço inferior entre os cartões */
+    max-width: 350px; /* Limite máximo da largura dos cartões para não ficarem muito largos */
+    box-sizing: border-box; /* Inclui padding e borda nas dimensões do cartão */
+  }
+  
+  .cart-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Efeito de sombra ao passar o mouse */
+  }
+  
+  .cart-image {
+    width: 70%; /* Ajusta a imagem para ocupar toda a largura do cartão */
+    height: 150px; /* Altura fixa para manter uma aparência consistente */
+    object-fit: cover; /* Ajusta a imagem para cobrir o espaço sem distorção */
+    border-radius: 8px 8px 0 0; /* Bordas arredondadas na parte superior */
+  }
+  
+  .cart-body {
+    padding: 15px; /* Espaçamento interno do corpo do cartão */
+    flex: 1; /* Permite que o corpo do cartão ocupe o espaço restante */
+    display: flex; /* Usar flexbox para organizar o conteúdo do cartão */
+    flex-direction: column; /* Coloca os elementos em coluna */
+    width: 110%;
+  }
+  
+  .cart-title {
+    font-family: 'Playfair Display', serif; /* Fonte cursiva para o título */
+    color: #FAB1B1; /* Cor rosa suave para os títulos */
+  }
+  
+  .cart-text {
+    font-family: 'Montserrat', sans-serif; /* Fonte moderna para o texto */
+    color: #333333; /* Cor do texto */
+  }
+  
+  .cart-total {
+    margin-top: 20px;
+    font-weight: bold; /* Texto em negrito para o total */
+    color: #FAB1B1; /* Cor rosa suave para o total */
+  }
+  
+  .btn-success {
+    background-color: #E1BEE7; /* Cor lavanda suave para o botão de finalizar */
+    border: none; /* Remove borda padrão */
+    color: #FFFFFF; /* Texto branco */
+    margin-top: auto; /* Empurra o botão para a parte inferior do cartão */
+  }
+  
+  .btn-danger {
+    background-color: #FF6F61; /* Cor de destaque para o botão de remover */
+    width: 100px;
+    height: 47px;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif; /* Fonte moderna para o texto */
+  }
+
+  .cart-modal .form-group {
+    text-align: center; /* Centraliza o texto dentro do grupo */
+  }
+  
+  /* Para os labels das cores e tamanhos, se necessário */
+  .form-label {
+    margin-bottom: 15px; /* Para dar um pouco de espaço abaixo do label */
+    text-align: center;
+  }
+  
+  .radio-label {
+    display: flex; /* Flex para centralizar o conteúdo */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+  }
+  
+  .ass{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+    
+  }
+
+  .sas{
+    text-align: center;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif; /* Fonte moderna para o texto */
+  }
+
+  .sis{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+
+  .siste{
+    width: 20px !important;
+    justify-content: center;
+    align-items: center;
+    padding-left: 130px;
+  }
+
+
+  .Form.Group{
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .cart-card {
+      width: 90%; /* Cartões ocupam toda a largura em telas pequenas */
+    }
+  }
+  

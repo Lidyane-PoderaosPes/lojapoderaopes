@@ -1,0 +1,29 @@
+/* src/style/AddProduct.css */
+.add-product-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9; /* Cor de fundo clara */
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.product-form {
+  background-color: #ffffff; /* Fundo branco para o formulário */
+  padding: 20px; /* Adiciona padding ao redor do formulário */
+  border-radius: 8px; /* Bordas arredondadas no formulário */
+}
+
+.custom-btn {
+  background-color: #ebaaeb;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: #eeccee;
+}

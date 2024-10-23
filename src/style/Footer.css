@@ -1,0 +1,39 @@
+.footer-title {
+    font-size: 1.5rem;
+    color: #E57373; /* Um rosa mais forte */
+    font-family: 'Playfair Display', serif; /* Fonte elegante */
+
+  }
+  
+  .footer-text {
+    font-size: 1rem;
+    color: #222; /* Cor mais escura para melhor contraste */
+    font-family: 'Open Sans', sans-serif; /* Fonte limpa */
+  }
+  
+  .footer-link {
+    color: #00CED1; /* Um tom de azul-turquesa mais visível */
+    text-decoration: none;
+  }
+  
+  .footer-link:hover {
+    color: #9C27B0; /* Um roxo mais forte no hover */
+  }
+  
+  .footer-social a {
+    color: #FFB300; /* Dourado mais escuro para mais contraste */
+    font-size: 1.5rem;
+  }
+  
+  .footer-bottom {
+    font-size: 0.9rem;
+    color: #444; /* Cinza escuro para melhor legibilidade */
+  }
+  
+  /* Responsividade adicional, se necessário */
+  @media (max-width: 768px) {
+    .footer {
+      text-align: center;
+    }
+  }
+  

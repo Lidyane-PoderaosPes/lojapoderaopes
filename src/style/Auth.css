@@ -1,0 +1,94 @@
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background-color: #F5F5F5; /* Fundo neutro */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .auth-card {
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    background-color: #FFFFFF; /* Fundo branco para o cartão */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .auth-title {
+    color: #FAB1B1; /* Cor primária */
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif; /* Fonte cursiva */
+  }
+  
+  .auth-tabs {
+    margin-bottom: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  .auth-form {
+    width: 100%;
+  }
+  
+  .auth-input {
+    margin-bottom: 1rem;
+    border: 1px solid #E1BEE7; /* Cor secundária */
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 10px;
+    font-weight: bold;
+    color: white; /* Cor do texto em branco para melhor contraste */
+    border-radius: 5px; /* Bordas levemente arredondadas */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transição suave */
+    background-color: #FAB1B1; /* Cor primária */
+}
+
+
+.login-btn:hover {
+    background-color: #F08080; /* Cor mais escura para o hover */
+    transform: translateY(-2px); /* Efeito de leve elevação */
+    cursor: pointer; /* Mudança de cursor para indicar interação */
+}
+
+.login-btn.success {
+    background-color: #B2EBF2; /* Cor de sucesso */
+    border: none;
+}
+
+.login-btn.success:hover {
+    background-color: #87d3db; /* Tom mais escuro no hover */
+    transform: translateY(-2px); /* Efeito de leve elevação */
+    cursor: pointer; /* Mudança de cursor */
+}
+
+  
+  .text-danger {
+    color: #FF0000; /* Cor de erro */
+    font-size: 0.875rem;
+    margin-top: -10px;
+  }
+  
+
+  /* Auth.css */
+
+.modal-content {
+  border-radius: 10px; /* Cantos arredondados do modal */
+}
+
+.modal-header {
+  background-color: #f8f9fa; /* Cor de fundo do cabeçalho do modal */
+}
+
+.modal-title {
+  color: #333; /* Cor do título do modal */
+}

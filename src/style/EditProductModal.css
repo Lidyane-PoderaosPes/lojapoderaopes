@@ -1,0 +1,25 @@
+/* src/style/EditProductModal.css */
+.modal-header {
+    background-color: #F5F5F5; /* Cinza claro */
+}
+
+.modal-footer {
+    background-color: #F5F5F5; /* Cinza claro */
+}
+
+.text-primary {
+    color: #E1BEE7; /* Lavanda */
+}
+
+.form-control {
+    border: 1px solid #FFD700; /* Dourado */
+}
+
+.form-control:focus {
+    border-color: #AEEEEE; /* Azul claro */
+    box-shadow: 0 0 5px rgba(0, 238, 238, 0.5); /* Efeito de sombra ao focar */
+}
+
+.rounded-pill {
+    border-radius: 50px; /* Bordas arredondadas */
+}

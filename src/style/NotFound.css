@@ -1,0 +1,25 @@
+/* src/style/NotFound.css */
+.not-found-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.not-found-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.not-found-message {
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.not-found-btn {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+}

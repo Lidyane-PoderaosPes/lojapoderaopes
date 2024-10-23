@@ -1,0 +1,129 @@
+/* Paleta de Cores */
+:root {
+  --cor-primaria: #e5def2; /* Lavanda clara */
+  --cor-secundaria: #4bb9a0; /* Verde água suave */
+
+  --cor-neutra: #F0F0F0; /* Cinza claro */
+  --cor-acento: #d5eb5a; /* Dourado mais suave */
+  --cor-neutra-fundo: #FAFAFA; /* Branco gelo */
+  --cor-texto: #444; /* Texto levemente escurecido */
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--cor-neutra-fundo); /* Fundo suave */
+  color: var(--cor-texto); /* Texto sutil */
+}
+
+/* Estilização da Navbar */
+.custom-navbar {
+  background-color: var(--cor-primaria); /* Cor mais discreta para a navbar */
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.custom-navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.logo-container {
+  margin-right: auto;
+}
+
+.logo-image {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+}
+
+.navbar-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--cor-texto); /* Texto mais discreto */
+  transition: color 0.3s;
+}
+
+.navbar-brand:hover {
+  color: var(--cor-acento); /* Dourado discreto no hover */
+}
+
+.custom-link {
+  margin-right: 1rem;
+  color: var(--cor-texto);
+  font-size: 1.05rem;
+  transition: color 0.3s;
+}
+
+.custom-link:hover {
+  color: var(--cor-acento); /* Destaque suave no hover */
+}
+
+/* Botões de Login/Logout */
+.custom-btn-login, .custom-btn-logout {
+  background-color: var(--cor-secundaria); /* Verde água suave */
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.3rem;
+  transition: background-color 0.3s;
+}
+
+.custom-btn-login:hover, .custom-btn-logout:hover {
+  background-color: #8ce6d5; /* Tom mais escuro no hover */
+}
+
+/* Carrinho de Compras */
+.custom-cart-link {
+  position: relative;
+  color: var(--cor-texto);
+}
+
+.custom-cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #FF8A65; /* Tom mais suave de laranja */
+  color: white;
+  border-radius: 50%;
+  padding: 3px 6px;
+  font-size: 12px;
+}
+
+/* Banner rotativo */
+.custom-banner {
+  background-color: var(--cor-primaria); /* Lavanda clara */
+  color: var(--cor-neutra); /* Texto branco */
+  padding: 2rem;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+}
+
+/* Seções de produtos */
+.product-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 2rem;
+  background-color: var(--cor-neutra-fundo);
+}
+
+/* Rodapé */
+.custom-footer {
+  background-color: var(--cor-secundaria); /* Fundo suave */
+  color: var(--cor-neutra); /* Texto branco */
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.custom-footer a {
+  color: var(--cor-acento); /* Links em dourado suave */
+  text-decoration: none;
+}
+
+.custom-footer a:hover {
+  text-decoration: underline;
+}

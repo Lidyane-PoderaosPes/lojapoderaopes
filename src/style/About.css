@@ -1,0 +1,142 @@
+/* src/style/About.css */
+
+.about-container {
+  padding: 20px;
+  width: 100%;
+  margin: auto;
+  background-color: #F5F5F5; /* Cinza claro para o fundo */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.5rem; /* Tamanho da fonte */
+  color: #E1BEE7; /* Lavanda suave */
+  font-family: 'Playfair Display', serif; /* Fonte elegante */
+}
+
+.about-logo {
+  display: block;
+  margin: 0 auto 20px;
+  width: 150px; /* Ajuste conforme necessário */
+  border-radius: 20px;
+}
+
+.about-content {
+  display: block;
+  flex-direction: column;
+  margin: 0 auto 20px;
+  width: 75%; /* Ajuste conforme necessário */
+  border-radius: 20px;
+}
+
+.about-image {
+  width: 100%; /* Ajusta a largura da imagem para ocupar 100% do espaço disponível */
+  height: auto;
+  border-radius: 20px;
+  margin: 10px 0; /* Margem para separar imagens */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efeito */
+  padding-left: 20px;
+}
+
+.about-images {
+  width: 10%; /* Ajusta a largura da imagem para ocupar 100% do espaço disponível */
+  height: 20%;
+  border-radius: 20px;
+  margin: 10px 0; /* Margem para separar imagens */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efeito */
+  padding-left: 20px;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: justify;
+  color: #333; /* Cor do texto */
+  font-family: 'Open Sans', sans-serif; /* Fonte moderna e limpa */
+  background-color: white; /* Fundo branco para contraste */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.about-story {
+  display: flex;
+  flex-direction: column; /* Permite que a imagem e o texto se empilhem em telas menores */
+  align-items: center; /* Alinha verticalmente os itens */
+  justify-content: space-evenly;
+
+}
+
+.about-storys {
+  display: flex;
+  align-items: center; /* Alinha verticalmente os itens */
+  justify-content: space-evenly;
+
+}
+
+.about-storys img {
+  width: 10% !important; /* Ajusta a largura da imagem da história para 100% */
+
+  margin-bottom: 10px; /* Espaço entre a imagem e o texto */
+}
+
+.about-story img {
+  width: 100%; /* Ajusta a largura da imagem da história para 100% */
+  max-width: 300px; /* Limita a largura máxima da imagem */
+  margin-bottom: 10px; /* Espaço entre a imagem e o texto */
+}
+
+.full-width {
+  margin-top: 20px; /* Margem superior para separar de outros elementos */
+}
+
+/* Media Queries para responsividade */
+@media (min-width: 768px) {
+  .about-story {
+    flex-direction: row; /* Muda para coluna em telas maiores */
+  }
+
+  .about-story img {
+    width: 40%; /* Ajusta a largura da imagem da história */
+    margin-right: 20px; /* Espaço entre a imagem e o texto */
+  }
+
+  .about-storys {
+    flex-direction: row; /* Muda para coluna em telas maiores */
+  }
+
+  .about-storys img {
+    width: 40%; /* Ajusta a largura da imagem da história */
+    margin-right: 20px; /* Espaço entre a imagem e o texto */
+  }
+
+
+  .about-text, .about-texte {
+    font-size: 1.2rem; /* Aumenta o tamanho da fonte em telas maiores */
+  }
+}
+
+@media (max-width: 767px) {
+  .about-title {
+    font-size: 2rem; /* Diminui o tamanho da fonte para telas menores */
+  }
+
+  .about-text, .about-texte {
+    font-size: 1rem; /* Diminui o tamanho da fonte para telas menores */
+  }
+
+  .about-logo {
+    width: 100px; /* Ajusta a largura do logo em telas menores */
+  }
+
+  .about-storys {
+    flex-direction: column; /* Muda para coluna em telas maiores */
+  }
+
+  .about-storys img {
+    width: 60% !important; /* Ajusta a largura da imagem da história */
+    margin-right: 20px; /* Espaço entre a imagem e o texto */
+  }
+}

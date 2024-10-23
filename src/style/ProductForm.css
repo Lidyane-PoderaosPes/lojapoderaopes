@@ -1,0 +1,107 @@
+/* Estilo base */
+.product-form {
+  background-color: #FFFFFF;
+  color: #333;
+  border: 1px solid #E1BEE7;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 100%; /* Certifica-se de que o formulário não ultrapasse a largura da tela */
+}
+
+.form-group label {
+  font-family: 'Playfair Display', serif;
+  color: #FAB1B1;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.form-control {
+  border-color: #AEEEEE;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 5px #FFD700;
+  border-color: #FFD700;
+}
+
+.form-control-file {
+  width: 100%; /* Faz o campo de upload ocupar 100% do espaço disponível */
+  background-color: #F5F5F5;
+  padding: 5px;
+}
+
+.alert-info {
+  background-color: #B2EBF2;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #ebaaeb;
+  border: none;
+  border-radius: 20px;
+  padding: 0px 0px;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #eeccee;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  flex: 1;
+  margin-right: 40px;
+}
+
+.form-group:last-child {
+  margin-right: 0;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.checkbox-group .form-check {
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+/* Ajustes de responsividade para telas menores */
+@media (max-width: 768px) {
+  /* O formulário ocupa toda a largura */
+  .product-form {
+    padding: 15px;
+  }
+
+  /* Reorganiza as colunas para uma única coluna em dispositivos móveis */
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-row .form-group {
+    flex: 0 0 100%; /* Ocupará 100% da largura */
+    max-width: 100%;
+    margin-right: 0; /* Remove margens extras em dispositivos móveis */
+    margin-bottom: 15px; /* Adiciona um espaço entre os elementos */
+  }
+
+  /* Remove margens extras dos grupos de checkbox */
+  .checkbox-group .form-check {
+    margin-right: 10px;
+  }
+}
