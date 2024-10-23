@@ -17,23 +17,34 @@ const Footer = () => {
           <div className="col-md-4 mb-4">
             <h4 className="footer-title">Links Úteis</h4>
             <ul className="list-unstyled">
-              <li><a href="#" className="footer-link">Início</a></li>
+             
               <li><a href="#" className="footer-link">Coleção</a></li>
               <li><a href="#" className="footer-link">Sobre Nós</a></li>
-              <li><a href="#" className="footer-link">Contato</a></li>
+       
             </ul>
           </div>
           {/* Seção Contato */}
           <div className="col-md-4 mb-4">
             <h4 className="footer-title">Contato</h4>
-            <p className="footer-text">Email: contato@lojafeminina.com</p>
+            <p className="footer-text">Email: poderaospez@gmail.com</p>
             <p className="footer-text">Telefone: (61) 1234-5678</p>
+            
             <div className="footer-social">
               <a href="#" className="me-2"><i className="fab fa-facebook-f"></i></a>
-              <a href="#" className="me-2"><i className="fab fa-instagram"></i></a>
-              <a href="#"><i className="fab fa-twitter"></i></a>
+              <a href="https://www.instagram.com/poder_aospes/" className="me-2"><i className="fab fa-instagram"></i></a>
+              
+              {/* Link para WhatsApp */}
+              <a 
+                href="https://wa.me/556112345678?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20seus%20produtos." 
+                className="me-2" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <i className="fab fa-whatsapp"></i> {/* Ícone do WhatsApp */}
+              </a>
             </div>
           </div>
+
         </div>
         <div className="row mt-3">
           <div className="col text-center">
