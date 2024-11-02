@@ -27,15 +27,15 @@ const Footer = () => {
           <div className="col-md-4 mb-4">
             <h4 className="footer-title">Contato</h4>
             <p className="footer-text">Email: poderaospez@gmail.com</p>
-            <p className="footer-text">Telefone: (61) 1234-5678</p>
+            <p className="footer-text">Telefone: (61) 993302784</p>
             
             <div className="footer-social">
-              <a href="#" className="me-2"><i className="fab fa-facebook-f"></i></a>
+                {/* <a href="#" className="me-2"><i className="fab fa-facebook-f"></i></a>*/}
               <a href="https://www.instagram.com/poder_aospes/" className="me-2"><i className="fab fa-instagram"></i></a>
               
               {/* Link para WhatsApp */}
               <a 
-                href="https://wa.me/556112345678?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20seus%20produtos." 
+                href="https://wa.me/5561993302784?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20seus%20produtos." 
                 className="me-2" 
                 target="_blank" 
                 rel="noopener noreferrer"

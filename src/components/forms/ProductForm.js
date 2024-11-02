@@ -11,7 +11,14 @@ const ProductForm = ({ product, onChange, onFileChange, message }) => {
     'Rosa': '#FFC0CB',
     'Azul': '#0000FF',
     'Verde': '#008000',
-  };
+    'Rose': '#FF007F', // ou '#FADADD' para um tom mais claro
+    'Dourado': '#FFD700',
+    'Marrom': '#8B4513',
+    'Pink': '#FF69B4',
+    'Marsala': '#800000', // ou '#B03060' para um tom mais próximo do vinho
+    'Multicolor': '#FF5733' // Exemplo de tom multicolorido; este pode variar
+};
+
 
   const handleCheckboxChange = (event) => {
     const { name, value, checked } = event.target;
@@ -146,8 +153,8 @@ const ProductForm = ({ product, onChange, onFileChange, message }) => {
           <option value="">Selecione...</option>
           <option value="Sandálias">Sandálias</option>
           <option value="Rasteirinhas">Rasteirinhas</option>
-          <option value="Sapatos de Salto">Sapatos de Salto</option>
           <option value="Sapatilhas">Sapatilhas</option>
+          <option value="Scarpin.">Scarpin</option>     
           <option value="Botas">Botas</option>
         </select>
       </div>
