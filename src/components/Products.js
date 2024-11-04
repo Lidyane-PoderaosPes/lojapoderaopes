@@ -140,12 +140,27 @@ const Products = ({ updateCartCount }) => {
                 <Card.Text className="product-price">
                   Preço: R$ {product.price.toFixed(2)}
                 </Card.Text>
-                <Card.Text className="product-description">
-                  {product.description}
-                </Card.Text>
+                
                 <Card.Text className="product-stock">
-                  Estoque: {product.stock} unidades disponíveis
+                  {product.stock === 0 ? (
+                    <span style={{ color: 'red', fontWeight: 'bold' }}>Produto esgotado</span>
+                  ) : (
+                    `Estoque: ${product.stock} unidades disponíveis`
+                  )}
                 </Card.Text>
+
+                <Card.Text className="product-sizes">
+                  <span>Tamanhos disponíveis:</span>
+                  <div className="size-bullets">
+                    {product.sizes.map((size, index) => (
+                      <span key={index} className="size-bullet">
+                        {size} 
+                      </span>
+                    ))}
+                  </div>
+                </Card.Text>
+
+
                 <Card.Text className="product-colors">
                   <span>Cores disponíveis:</span>
                   <div className="color-bullets">

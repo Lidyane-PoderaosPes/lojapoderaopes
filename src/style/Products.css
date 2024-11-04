@@ -116,6 +116,27 @@
   margin-right: 5px; /* Espaço entre o ícone e o texto */
 }
 
+.size-bullets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px; /* Espaçamento entre os tamanhos */
+  justify-content: center;
+}
+
+.size-bullet {
+  padding: 5px 10px;
+  border: 1px solid #ccc; /* Borda para os tamanhos */
+  border-radius: 5px; /* Bordas arredondadas */
+  background-color: #f9f9f9; /* Cor de fundo para os tamanhos */
+}
+
+.out-of-stock {
+  color: red;
+  font-weight: bold;
+}
+
+
+
 /* Estilos responsivos */
 @media (max-width: 768px) {
   .product-card {

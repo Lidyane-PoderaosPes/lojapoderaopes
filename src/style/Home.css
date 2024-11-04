@@ -68,6 +68,7 @@
   text-align: center;
   transition: transform 0.2s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidade */
+  height: 95% !important;
 }
 
 .product-card:hover {
@@ -76,7 +77,7 @@
 
 .product-image {
   width: 60%;
-  height: auto;
+  height: 60% !important;
   border-radius: 5px; /* Borda arredondada na imagem */
 }
 
@@ -120,4 +121,65 @@
 
 .card-img, .card-img-bottom, .card-img-top {
   width: 61% !important; /* Ajuste de largura para imagem */
+}
+
+/* Home.css */
+.zoom-container {
+  overflow: hidden;
+  position: relative;
+  cursor: crosshair;
+}
+
+.zoom-image {
+  transition: transform 0.1s ease-out;
+  transform-origin: center center; /* Origem inicial do zoom */
+}
+
+.zoom-image:hover {
+  transform: scale(2.5); /* Ajuste o valor para a intensidade do zoom */
+  cursor: zoom-out;
+}
+
+/* Estilos responsivos para o modal de imagem */
+/* Estilos responsivos para o modal de imagem */
+@media (max-width: 768px) {
+  .modal-dialog {
+    max-width: 100%;
+    margin: 0;
+    height: 70%;
+  }
+
+  .zoom-container {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centraliza a imagem horizontalmente */
+    align-items: center; /* Centraliza a imagem verticalmente */
+    margin-bottom: 5px; /* Espaço entre imagens */
+  }
+
+  .modal-body .row {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Espaçamento entre as imagens no modo coluna */
+  }
+
+  .product-image {
+    width: 80% ; /* Aumenta a largura da imagem */
+    height: auto; /* Ajusta a altura automaticamente */
+    border-radius: 5px; /* Borda arredondada */
+  }
+
+  .zoom-image {
+    width: 90%; /* Aumenta a largura da imagem dentro do contêiner */
+    max-width: 350px; /* Define um tamanho máximo maior para as imagens */
+    transition: transform 0.1s ease-out;
+    transform-origin: center center; /* Centraliza o ponto de origem do zoom */
+    margin-bottom: 10px; /* Espaço extra para separar imagens em dispositivos móveis */
+  }
+
+  .zoom-image:hover {
+    transform: scale(2.5); /* Intensidade do zoom */
+    cursor: zoom-out;
+  }
 }
