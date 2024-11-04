@@ -6,14 +6,18 @@ import '../style/AddProduct.css'; // Estilo opcional
 import { getAuth } from 'firebase/auth';
 
 const colorNames = {
-  '#C0C0C0': 'Prata',
-  '#F5F5DC': 'Bege',
-  '#FF0000': 'Vermelho',
-  '#008000': 'Verde',
-  '#0000FF': 'Azul',
-  '#FFFFFF': 'Branco',
-  '#000000': 'Preto',
-  '#FFC0CB': 'Rosa',
+  'Bege': '#F5F5DC',
+  'Prata': '#C0C0C0',
+  'Preto': '#000000',
+  'Rosa': '#FFC0CB',
+  'Azul': '#0000FF',
+  'Verde': '#008000',
+  'Rose': '#FF007F', // ou '#FADADD' para um tom mais claro
+  'Dourado': '#FFD700',
+  'Marrom': '#8B4513',
+  'Pink': '#FF69B4',
+  'Marsala': '#800000', // ou '#B03060' para um tom mais próximo do vinho
+  'Multicolor': '#FF5733' // Exemplo de tom multicolorido; este pode variar
 };
 
 const AddProduct = () => {

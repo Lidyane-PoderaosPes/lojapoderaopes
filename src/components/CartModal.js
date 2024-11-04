@@ -28,6 +28,12 @@ const colorNames = {
   '#FFFFFF': 'Branco',
   '#000000': 'Preto',
   '#FFC0CB': 'Rosa',
+  '#FF007F': 'Rose', // ou '#FADADD' para um tom mais claro
+  '#FFD700': 'Dourado',
+  '#8B4513': 'Marrom',
+  '#FF69B4': 'Pink',
+  '#800000': 'Marsala', // ou '#B03060' para um tom mais próximo do vinho
+  '#FF5733': 'Multicolor' // Exemplo de tom multicolorido; este pode variar
   // Adicione mais cores conforme necessário
 };
 

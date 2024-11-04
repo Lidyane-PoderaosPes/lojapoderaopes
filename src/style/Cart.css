@@ -21,6 +21,7 @@
   margin-bottom: 20px; /* Espaço inferior entre os cartões */
   max-width: 350px; /* Limite máximo da largura dos cartões para não ficarem muito largos */
   box-sizing: border-box; /* Inclui padding e borda nas dimensões do cartão */
+  border-color: #333333;
 }
 
 .cart-card:hover {
