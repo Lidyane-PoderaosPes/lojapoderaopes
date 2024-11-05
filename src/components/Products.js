@@ -23,6 +23,44 @@ const Products = ({ updateCartCount }) => {
   const [selectedProductImages, setSelectedProductImages] = useState([]); // Estado para armazenar as imagens do produto selecionado
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
+  const [zoomStyles, setZoomStyles] = useState({});
+
+  const openImageModal = (images) => {
+    setSelectedProductImages(images);
+    setShowImageModal(true);
+    setZoomStyles({});
+  };
+
+  const closeImageModal = () => {
+    setShowImageModal(false);
+    setZoomStyles({});
+  };
+
+  const handleZoomMove = (e, imageIndex) => {
+    // Detecta se é um toque em dispositivo móvel ou mouse em desktop
+    const isTouchEvent = e.type === 'touchmove';
+    const clientX = isTouchEvent ? e.touches[0].clientX : e.clientX;
+    const clientY = isTouchEvent ? e.touches[0].clientY : e.clientY;
+
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = ((clientX - left) / width) * 100;
+    const y = ((clientY - top) / height) * 100;
+
+    setZoomStyles((prevZoomStyles) => ({
+      ...prevZoomStyles,
+      [imageIndex]: {
+        transform: 'scale(2)',
+        transformOrigin: `${x}% ${y}%`,
+      },
+    }));
+  };
+
+  const handleZoomEnd = (imageIndex) => {
+    setZoomStyles((prevZoomStyles) => ({
+      ...prevZoomStyles,
+      [imageIndex]: { transform: 'scale(1)' },
+    }));
+  };
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -103,14 +141,6 @@ const Products = ({ updateCartCount }) => {
     }
   };
 
-  const openImageModal = (images) => {
-    setSelectedProductImages(images); // Armazena as imagens do produto selecionado
-    setShowImageModal(true);
-  };
-
-  const closeImageModal = () => {
-    setShowImageModal(false);
-  };
 
   return (
     <div className="product-container">
@@ -195,26 +225,36 @@ const Products = ({ updateCartCount }) => {
         ))}
       </Row>
 
-      {/* Modal para exibir as imagens apenas do produto selecionado */}
+      {/* Modal para exibir as imagens do produto selecionado */}
       <Modal show={showImageModal} onHide={closeImageModal} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Imagens do Produto</Modal.Title>
+         
         </Modal.Header>
-        <Modal.Body>
-          <Row className="g-2">
-            {selectedProductImages.map((url, index) => (
-              <Col xs={6} md={4} key={index}> {/* Adiciona responsividade com xs e md */}
-                <Card.Img variant="top" src={url} className="product-image" />
-              </Col>
-            ))}
+        <Modal.Body className="image-modal-body">
+          <Row className="g-2 justify-content-center">
+            {selectedProductImages && selectedProductImages.length > 0 ? (
+              selectedProductImages.map((url, index) => (
+                <Col xs={12} md={6} lg={4} key={index} className="zoom-container">
+                  <Card.Img
+                    variant="top"
+                    src={url}
+                    className="zoom-image"
+                    alt={`Imagem do produto ${index + 1}`}
+                    style={zoomStyles[index] || { transform: 'scale(1)' }}
+                    onMouseMove={(e) => handleZoomMove(e, index)}
+                    onMouseLeave={() => handleZoomEnd(index)}
+                    onTouchMove={(e) => handleZoomMove(e, index)}
+                    onTouchEnd={() => handleZoomEnd(index)}
+                  />
+                </Col>
+              ))
+            ) : (
+              <p>Nenhuma imagem disponível</p>
+            )}
           </Row>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={closeImageModal}>
-            Fechar
-          </Button>
-        </Modal.Footer>
+        </Modal.Body> 
       </Modal>
+
 
       {/* Modals */}
       <EditProductModal

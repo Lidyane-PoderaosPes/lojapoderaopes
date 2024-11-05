@@ -36,6 +36,7 @@ const Cart = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedProductImages, setSelectedProductImages] = useState([]); 
+  const [showFinalizeModal, setShowFinalizeModal] = useState(false); // Controle para o modal de Finalizar Compra
   const auth = getAuth();
 
   // Função para buscar produtos
@@ -108,6 +109,10 @@ const Cart = () => {
     setShowImageModal(false);
   };
 
+  // Função para abrir o modal de finalizar compra
+  const handleShowFinalizeModal = () => setShowFinalizeModal(true);
+  const handleCloseFinalizeModal = () => setShowFinalizeModal(false);
+
   return (
     <div className="cart-container mt-5">
       <h1 className="text-center mb-4">Carrinho</h1>
@@ -150,8 +155,19 @@ const Cart = () => {
 
           <h3 className="text-end cart-total">Total: R$ {calculateTotal()}</h3>
 
-          <FinalizePurchase user={user} cartItems={cartItems} calculateTotal={calculateTotal} setCartItems={setCartItems} />
-        </>
+          <Button variant="primary" onClick={handleShowFinalizeModal} className="botao-purchase">
+            Finalizar Carrinho
+          </Button>
+
+          <Modal show={showFinalizeModal} onHide={handleCloseFinalizeModal} centered>
+            <Modal.Header closeButton>
+              <Modal.Title >Finalizar Compra</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <FinalizePurchase user={user} cartItems={cartItems} calculateTotal={calculateTotal} setCartItems={setCartItems} />
+            </Modal.Body>
+           
+          </Modal></>
       )}
 
       <Modal show={showImageModal} onHide={closeImageModal} size="lg" centered>

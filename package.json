@@ -11,6 +11,7 @@
     "ecommerce-app": "file:",
     "emailjs-com": "^3.2.0",
     "firebase": "^10.14.1",
+    "qrcode.react": "^4.1.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.5",
     "react-dom": "^18.3.1",

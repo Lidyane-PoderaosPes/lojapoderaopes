@@ -1,5 +1,5 @@
 .cart-container {
-    width: 100%; /* Mantém a largura desejada para o carrinho */
+    width: 100% ;  /* Mantém a largura desejada para o carrinho */
     margin: 0 auto; /* Centraliza o container do carrinho */
     background-color: #FFFFFF; /* Fundo branco */
     padding: 20px; /* Espaçamento interno */

@@ -2,10 +2,9 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
+// Configurações do Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAJgHKBuONivsHsXfH7CVd3oljvpAZSRlI",
   authDomain: "poderaospes-bfa97.firebaseapp.com",
@@ -15,9 +14,10 @@ const firebaseConfig = {
   appId: "1:248608965901:web:b217e7f772dd7bcf949c44"
 };
 
-
+// Inicializando o Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const storage = getStorage(app); // Inicializando o Firebase Storage
 
-export { db, auth };
+export { db, auth, storage };

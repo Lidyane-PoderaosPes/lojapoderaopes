@@ -112,13 +112,13 @@ const Home = () => {
       {/* Modal para exibir as imagens do produto selecionado */}
       <Modal show={showImageModal} onHide={closeImageModal} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Imagens do Produto</Modal.Title>
+         
         </Modal.Header>
-        <Modal.Body>
-          <Row className="g-2">
+        <Modal.Body className="image-modal-body">
+          <Row className="g-2 justify-content-center">
             {selectedProductImages && selectedProductImages.length > 0 ? (
               selectedProductImages.map((url, index) => (
-                <Col xs={6} md={4} key={index} className="zoom-container">
+                <Col xs={12} md={6} lg={4} key={index} className="zoom-container">
                   <Card.Img
                     variant="top"
                     src={url}
@@ -136,14 +136,9 @@ const Home = () => {
               <p>Nenhuma imagem disponível</p>
             )}
           </Row>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="secondary" onClick={closeImageModal}>
-            Fechar
-          </Button>
-        </Modal.Footer>
+        </Modal.Body> 
       </Modal>
+
 
       <Footer />
     </div>

@@ -124,15 +124,24 @@
 }
 
 /* Home.css */
+.image-modal-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto; /* Scroll horizontal em telas menores */
+  max-height: 95vh; /* Limita a altura do modal para garantir que ele não exceda a tela */
+}
+
 .zoom-container {
-  overflow: hidden;
-  position: relative;
-  cursor: crosshair;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .zoom-image {
-  transition: transform 0.1s ease-out;
-  transform-origin: center center; /* Origem inicial do zoom */
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.3s ease; /* Suaviza o efeito de zoom */
 }
 
 .zoom-image:hover {
@@ -143,10 +152,14 @@
 /* Estilos responsivos para o modal de imagem */
 /* Estilos responsivos para o modal de imagem */
 @media (max-width: 768px) {
+  .zoom-image {
+    max-width: 90%; /* Aumenta a imagem para ocupar mais do espaço disponível */
+    height: auto;
+  }
   .modal-dialog {
     max-width: 100%;
     margin: 0;
-    height: 70%;
+    height: 80%;
   }
 
   .zoom-container {
@@ -161,7 +174,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px; /* Espaçamento entre as imagens no modo coluna */
+
   }
 
   .product-image {
