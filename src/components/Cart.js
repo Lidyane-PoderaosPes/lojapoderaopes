@@ -12,7 +12,7 @@ const colorNames = {
   '#C0C0C0': 'Prata',
   '#F5F5DC': 'Bege',
   '#FF0000': 'Vermelho',
-  '#008000': 'Verde',
+  '#008000': 'Verde', 
   '#0000FF': 'Azul',
   '#FFFFFF': 'Branco',
   '#000000': 'Preto',

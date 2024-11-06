@@ -4,11 +4,35 @@ import { collection, addDoc, doc, getDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../data/firebaseConfig';
 import emailjs from 'emailjs-com';
+import qrCodePix from '../assets/qrcode-pix.png'; // Importe a imagem do QR code
+
+// Mapeamento de cores
+const colorNames = {
+  '#C0C0C0': 'Prata',
+  '#F5F5DC': 'Bege',
+  '#FF0000': 'Vermelho',
+  '#008000': 'Verde',
+  '#0000FF': 'Azul',
+  '#FFFFFF': 'Branco',
+  '#000000': 'Preto',
+  '#FFC0CB': 'Rosa',
+  '#FF007F': 'Rose',
+  '#FFD700': 'Dourado',
+  '#8B4513': 'Marrom',
+  '#FF69B4': 'Pink',
+  '#800000': 'Marsala',
+  '#FF5733': 'Multicolor'
+  // Adicione mais cores conforme necessário
+};
+
+// Função para buscar o nome da cor pelo código hexadecimal
+const getColorName = (hexCode) => colorNames[hexCode] || hexCode;
 
 const PixPayment = () => (
   <div>
     <h5>Pagamento via Pix</h5>
     <p>Use o código Pix abaixo ou escaneie o QR code:</p>
+    <img src={qrCodePix} alt="QR code Pix" style={{ width: '150px', height: '150px' }} />
     <p><strong>Código Pix:</strong> 1234567890</p>
   </div>
 );
@@ -48,6 +72,7 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
   const [showModal, setShowModal] = useState(false);
   const [receiptFile, setReceiptFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [boletoURL, setBoletoURL] = useState('');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -66,17 +91,17 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
     fetchUserData();
   }, [user]);
 
-  const handleReceiptUpload = async () => {
-    if (!receiptFile) {
+  const handleReceiptUpload = async (file) => {
+    if (!file) {
       setToastMessage('Por favor, selecione um comprovante.');
       setShowToast(true);
       return;
     }
-
+  
     setIsUploading(true);
-    const storageRef = ref(storage, `receipts/${user.uid}/${receiptFile.name}`);
+    const storageRef = ref(storage, `receipts/${user.uid}/${file.name}`);
     try {
-      await uploadBytes(storageRef, receiptFile);
+      await uploadBytes(storageRef, file);
       const receiptURL = await getDownloadURL(storageRef);
       finalizePurchase(receiptURL);
     } catch (error) {
@@ -85,9 +110,9 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
       setShowToast(true);
     } finally {
       setIsUploading(false);
-      setShowModal(false);
     }
   };
+  
 
   const finalizePurchase = async (receiptURL = '') => {
     if (!paymentMethod) {
@@ -99,6 +124,13 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
     if (userData) {
       setIsProcessing(true);
       try {
+        let generatedBoletoURL = '';
+    
+        // Verifique se o método de pagamento é boleto
+        if (paymentMethod === 'boleto') {
+          generatedBoletoURL = 'https://exemplo.com/boleto-gerado';
+        }
+    
         const purchaseData = {
           userId: user.uid,
           userName: `${userData.Firstname} ${userData.Secondname}`,
@@ -111,12 +143,13 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
           cpf: userData.cpf || 'CPF não fornecido',
           createdAt: new Date(),
           paymentMethod: paymentMethod,
-          receiptURL: receiptURL
+          receiptURL: receiptURL,
+          boletoURL: generatedBoletoURL // Passe o URL diretamente aqui
         };
-
+    
         await addDoc(collection(db, 'purchases'), purchaseData);
         sendEmailToOwner(purchaseData);
-
+    
         setToastMessage(`Compra finalizada com sucesso! Total: R$ ${calculateTotal()}`);
         setShowToast(true);
         setCartItems([]);
@@ -132,7 +165,11 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
       setToastMessage('Você precisa estar logado para finalizar a compra.');
       setShowToast(true);
     }
+
+    
   };
+
+  
 
   const sendEmailToOwner = (purchaseDetails) => {
     const emailParams = {
@@ -140,13 +177,18 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
       from_name: purchaseDetails.userName,
       user_email: purchaseDetails.email,
       phone: purchaseDetails.phone,
-      items: purchaseDetails.items.map(item => `${item.name} (Cor: ${item.color}, Quantidade: ${item.quantity})`).join(',\n'),
+      items: purchaseDetails.items
+      .map(item => 
+        `${item.name} (Cor: ${getColorName(item.color)}, Tamanho: ${item.size}, Quantidade: ${item.quantity})`
+      ).join(',\n'),
       total: purchaseDetails.total,
       address: purchaseDetails.address,
       cep: purchaseDetails.cep,
       cpf: purchaseDetails.cpf,
       purchase_date: purchaseDetails.createdAt.toLocaleString(),
-      receipt_url: purchaseDetails.receiptURL
+      payment_method: paymentMethod,
+      receipt_url: purchaseDetails.receiptURL,
+      boleto_url: purchaseDetails.boletoURL
     };
 
     emailjs.send('service_9vea3bn', 'template_eujkp9a', emailParams, 'RdguVRT_gwVL0_gAh')
@@ -160,7 +202,6 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
 
   return (
     <div>
-      <h3>Finalizar Compra</h3>
       <p>Escolha o método de pagamento:</p>
       <Form.Select onChange={(e) => setPaymentMethod(e.target.value)} value={paymentMethod}>
         <option value="">Selecione...</option>
@@ -177,52 +218,59 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
         {paymentMethod === 'digitalWallet' && <DigitalWalletPayment />}
       </div>
 
-      {paymentMethod === 'bankTransfer' && (
-        <Button onClick={() => setShowModal(true)} style={{ marginTop: '20px' }}>Enviar Comprovante</Button>
+      {(paymentMethod === 'bankTransfer' || paymentMethod === 'pix' || paymentMethod === 'digitalWallet') && (
+        <div style={{ marginTop: '20px' }}>
+          <Form.Group controlId="formFile">
+            <Form.Label>Envie o comprovante:</Form.Label>
+            <Form.Control
+              type="file"
+              onChange={(e) => {
+                setReceiptFile(e.target.files[0]);
+                handleReceiptUpload(e.target.files[0]); // Chama o upload automaticamente ao selecionar o arquivo
+              }}
+            />
+          </Form.Group>
+          {isUploading && (
+            <div style={{ marginTop: '10px' }}>
+              <Spinner animation="border" size="sm" />
+              <span style={{ marginLeft: '8px' }}>Carregando comprovante...</span>
+            </div>
+          )}
+        </div>
       )}
 
+
+      <div className='centr'>
       <Button
-        className="botao-purchase"
-        onClick={() => finalizePurchase()}
-        style={{ marginTop: '20px' }}
-        disabled={isProcessing}
-      >
-        {isProcessing ? (
-          <Spinner animation="border" size="sm" />
-        ) : (
-          'Finalizar Compra'
-        )}
-      </Button>
+          className="botao-purchases"
+          onClick={() => finalizePurchase()}
+          style={{ marginTop: '20px' }}
+          disabled={isProcessing}
+        >
+          {isProcessing ? (
+            <Spinner animation="border" size="sm" />
+          ) : (
+            'Finalizar Compra'
+          )}
+        </Button>
+      </div>
+      
 
       <Toast
         onClose={() => setShowToast(false)}
         show={showToast}
         delay={3000}
         autohide
-        style={{ position: 'absolute', top: 20, right: 20 }}
+        style={{
+          position: 'fixed',
+          bottom: 20,
+          right: 20,
+          backgroundColor: '#333',
+          color: '#fff'
+        }}
       >
         <Toast.Body>{toastMessage}</Toast.Body>
       </Toast>
-
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Upload de Comprovante</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Selecione o arquivo do comprovante</Form.Label>
-            <Form.Control type="file" onChange={(e) => setReceiptFile(e.target.files[0])} />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={handleReceiptUpload} disabled={isUploading}>
-            {isUploading ? <Spinner animation="border" size="sm" /> : 'Enviar Comprovante'}
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };

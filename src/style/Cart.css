@@ -77,6 +77,31 @@
   cursor: pointer; /* Mudança de cursor para indicar interação */
 }
 
+.botao-purchases {
+  background-color: #E1BEE7; /* Cor lavanda suave para o botão de finalizar */
+  border: none; /* Remove borda padrão */
+  color: #FFFFFF; /* Texto branco */
+  margin-top: auto; /* Empurra o botão para a parte inferior do cartão */
+  display: flex;
+  justify-content: center;
+  width: 30%;
+  height: 20% !important;
+ 
+}
+
+.centr{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  width: 100%;
+}
+
+.botao-purchases:hover {
+  background-color: #F08080; /* Cor mais escura para o hover */
+  transform: translateY(-2px); /* Efeito de leve elevação */
+  cursor: pointer; /* Mudança de cursor para indicar interação */
+}
+
 .btn-danger {
   background-color: #FF6F61; /* Cor de destaque para o botão de remover */
   width: 100px;
