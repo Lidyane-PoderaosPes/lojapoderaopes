@@ -30,20 +30,27 @@ const getColorName = (hexCode) => colorNames[hexCode] || hexCode;
 
 const PixPayment = () => (
   <div>
-    <h5>Pagamento via Pix</h5>
     <p>Use o código Pix abaixo ou escaneie o QR code:</p>
-    <img src={qrCodePix} alt="QR code Pix" style={{ width: '150px', height: '150px' }} />
-    <p><strong>Código Pix:</strong> 1234567890</p>
+    <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>   
+      <p style={{ justifyContent: 'center' }}><strong>Chave Pix:</strong> 77981212251</p>
+      <img src={qrCodePix} alt="QR code Pix" style={{ width: '150px', height: '150px' }} />
+    </div>
+    <p><strong>Tipo de Chave:</strong> Telefone </p>
+    <p><strong>Nome:</strong> Lidyane de jesus Gonçalve</p>
   </div>
 );
 
 const BankTransferPayment = () => (
   <div>
-    <h5>Transferência Bancária</h5>
+
     <p>Transfira o valor para a conta abaixo:</p>
-    <p><strong>Banco:</strong> 000 - Nome do Banco</p>
-    <p><strong>Agência:</strong> 1234</p>
-    <p><strong>Conta:</strong> 56789-0</p>
+    <p><strong>Banco:</strong> 0260 - Nu Pagamentos S.A. - Instituição de Pagamento</p>
+    <p><strong>Tipo de conta:</strong> Conta Corrente</p>
+    <p><strong>Cpf:</strong> 00532696166</p>
+    <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+      <p><strong>Agência:</strong> 0001</p>
+      <p><strong>Conta:</strong> 87634228-3</p>
+    </div> 
     <p>Envie o comprovante por e-mail ou diretamente no sistema após a transferência.</p>
   </div>
 );
@@ -52,6 +59,7 @@ const BoletoPayment = () => (
   <div>
     <h5>Boleto Bancário</h5>
     <p>Um boleto será gerado ao finalizar a compra. Você poderá pagá-lo em qualquer banco ou lotérica.</p>
+    <p><strong>Indisponível no Momento</strong></p>
   </div>
 );
 
@@ -214,11 +222,11 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
       <div style={{ marginTop: '20px' }}>
         {paymentMethod === 'pix' && <PixPayment />}
         {paymentMethod === 'bankTransfer' && <BankTransferPayment />}
-        {paymentMethod === 'boleto' && <BoletoPayment />}
-        {paymentMethod === 'digitalWallet' && <DigitalWalletPayment />}
+        {/*{paymentMethod === 'boleto' && <BoletoPayment />}
+        {paymentMethod === 'digitalWallet' && <DigitalWalletPayment />}*/}
       </div>
 
-      {(paymentMethod === 'bankTransfer' || paymentMethod === 'pix' || paymentMethod === 'digitalWallet') && (
+      {(paymentMethod === 'bankTransfer' || paymentMethod === 'pix') && (
         <div style={{ marginTop: '20px' }}>
           <Form.Group controlId="formFile">
             <Form.Label>Envie o comprovante:</Form.Label>
@@ -238,6 +246,13 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
           )}
         </div>
       )}
+
+      {(paymentMethod === 'digitalWallet' || paymentMethod === 'boleto') && (
+              <div style={{ marginTop: '20px' }}>
+                 <p><strong>Forma de Pagamento </strong></p>
+                <p><strong>Indisponível no Momento</strong></p>
+              </div>
+            )}
 
 
       <div className='centr'>
