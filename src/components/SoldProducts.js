@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../data/firebaseConfig';
-import './SoldProducts.css'; // Importe o arquivo CSS
+import '../style/SoldProducts.css'; // Importe o arquivo CSS
 
 // Mapeamento de cores
 const colorNames = {
