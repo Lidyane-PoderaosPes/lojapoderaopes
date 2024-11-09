@@ -163,7 +163,7 @@ const Cart = () => {
           {/* Ajuste da seção para exibição lado a lado */}
           <div className="shipp-section d-flex justify-content-between mt-4">
             <div className="shipping-section flex-fill me-3">
-              <ShippingCalculator cartItems={cartItems} setShippingCost={setShippingCost} />
+              <ShippingCalculator cartItems={cartItems} setShippingCost={setShippingCost}  user={user}  />
             </div>
 
             <div className="totals-section flex-fill ms-3">

@@ -61,6 +61,8 @@ const SoldProducts = () => {
           <li key={item.id} className="product-item">
             <p className="product-info"><strong>Comprador:</strong> {item.userName}</p>
             <p className="product-info"><strong>E-mail:</strong> {item.email}</p>
+            <p className="product-info"><strong>Endereço:</strong> {item.address}</p> {/* Exibe o endereço */}
+            <p className="product-info"><strong>CEP:</strong> {item.cep}</p> {/* Exibe o CEP */}
             <p className="product-info"><strong>Itens:</strong> {item.items.map((i, index) => (
               <span key={index} className="item-details">
                 {`${i.name} (Cor: ${getColorName(i.color)}, Tamanho: ${i.size}, Quantidade: ${i.quantity})`}
