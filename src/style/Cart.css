@@ -47,6 +47,9 @@
 .cart-title {
   font-family: 'Playfair Display', serif; /* Fonte cursiva para o título */
   color: #FAB1B1; /* Cor rosa suave para os títulos */
+  font-size: 1.2em; /* Aumenta o tamanho do texto do nome do produto */
+  margin: 10px 0; /* Espaço acima e abaixo do nome */
+  text-align: center; /* Centraliza o texto */
 }
 
 .cart-text {
@@ -83,13 +86,13 @@
   color: #FFFFFF; /* Texto branco */
   margin-top: auto; /* Empurra o botão para a parte inferior do cartão */
   display: flex;
-  justify-content: center;
-  width: 30%;
+  justify-content: center !important;
+  width: 100% !important;
   height: 20% !important;
- 
+  align-items: center !important;
 }
 
-.centr{
+.centr {
   align-items: center;
   justify-content: center;
   display: flex;
@@ -110,27 +113,69 @@
   font-family: 'Montserrat', sans-serif; /* Fonte moderna para o texto */
 }
 
+.shipping-section {
+  width: 60%;
+  margin-top: 5px;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.shipp-section {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.totals-section {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.cart-total {
+  font-weight: bold;
+}
+
+.text-success {
+  color: #28a745; /* Verde para destacar o total com frete */
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .cart-card {
     width: 90%; /* Cartões ocupam toda a largura em telas pequenas */
   }
+  
   .botao-purchase {
-    background-color: #E1BEE7; /* Cor lavanda suave para o botão de finalizar */
-    border: none; /* Remove borda padrão */
-    color: #FFFFFF; /* Texto branco */
-    margin-top: auto; /* Empurra o botão para a parte inferior do cartão */
-    display: flex;
-    justify-content: center !important;
-    width: 50%;
-    height: 20% !important;
+    width: 60%; /* Reduz a largura do botão para ocupar 60% do cartão */
+    height: 40px !important; /* Ajusta a altura do botão */
+  }
+
+  .botao-purchase:hover {
+    background-color: #F08080; /* Cor mais escura para o hover */
+    transform: translateY(-2px); /* Efeito de leve elevação */
+    cursor: pointer; /* Mudança de cursor para indicar interação */
+  }
+
+  .cart-card {
+    width: 100%; /* Cartões ocupam toda a largura em telas menores */
+    margin: 10px 0; /* Ajusta o espaçamento entre os cartões */
+  }
+  
+  .shipping-section {
+    width: 100%; /* Ocupa toda a largura em telas menores */
+    margin-left: 0; /* Remove a margem esquerda */
+  }
+
+  .totals-section {
+    flex-direction: column; /* Empilha os itens na versão móvel */
     align-items: center;
   }
 
-  
-.botao-purchase:hover {
-  background-color: #F08080; /* Cor mais escura para o hover */
-  transform: translateY(-2px); /* Efeito de leve elevação */
-  cursor: pointer; /* Mudança de cursor para indicar interação */
-}
+  .centr {
+    flex-direction: column;
+    width: 100%;
+  }
 }

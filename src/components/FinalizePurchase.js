@@ -31,8 +31,8 @@ const getColorName = (hexCode) => colorNames[hexCode] || hexCode;
 const PixPayment = () => (
   <div>
     <p>Use o código Pix abaixo ou escaneie o QR code:</p>
-    <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>   
-      <p style={{ justifyContent: 'center' }}><strong>Chave Pix:</strong> 77981212251</p>
+    <div style={{ display: 'flex',  }}>   
+      <p><strong>Chave Pix:</strong> 77981212251</p>
       <img src={qrCodePix} alt="QR code Pix" style={{ width: '150px', height: '150px' }} />
     </div>
     <p><strong>Tipo de Chave:</strong> Telefone </p>
@@ -47,10 +47,8 @@ const BankTransferPayment = () => (
     <p><strong>Banco:</strong> 0260 - Nu Pagamentos S.A. - Instituição de Pagamento</p>
     <p><strong>Tipo de conta:</strong> Conta Corrente</p>
     <p><strong>Cpf:</strong> 00532696166</p>
-    <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-      <p><strong>Agência:</strong> 0001</p>
-      <p><strong>Conta:</strong> 87634228-3</p>
-    </div> 
+    <p><strong>Agência:</strong> 0001</p>
+    <p><strong>Conta:</strong> 87634228-3</p>
     <p>Envie o comprovante por e-mail ou diretamente no sistema após a transferência.</p>
   </div>
 );
@@ -59,7 +57,6 @@ const BoletoPayment = () => (
   <div>
     <h5>Boleto Bancário</h5>
     <p>Um boleto será gerado ao finalizar a compra. Você poderá pagá-lo em qualquer banco ou lotérica.</p>
-    <p><strong>Indisponível no Momento</strong></p>
   </div>
 );
 
@@ -71,7 +68,27 @@ const DigitalWalletPayment = () => (
   </div>
 );
 
-const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => {
+const calculateFreight = (cartItems) => {
+  let totalWeight = 0;
+  cartItems.forEach(item => {
+    totalWeight += item.weight * item.quantity;
+  });
+
+  let freightCost = 0;
+  if (totalWeight <= 500) {
+    freightCost = 10;
+  } else if (totalWeight <= 1000) {
+    freightCost = 20;
+  } else {
+    freightCost = 30;
+  }
+
+  return freightCost;
+};
+
+
+
+const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems,totalWithFreight }) => {
   const [userData, setUserData] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [showToast, setShowToast] = useState(false);
@@ -81,6 +98,7 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
   const [receiptFile, setReceiptFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [boletoURL, setBoletoURL] = useState('');
+  const [freightCost, setFreightCost] = useState(0);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -98,6 +116,12 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
     };
     fetchUserData();
   }, [user]);
+
+  useEffect(() => {
+    const freight = calculateFreight(cartItems);
+    setFreightCost(freight);
+  }, [cartItems]);
+
 
   const handleReceiptUpload = async (file) => {
     if (!file) {
@@ -120,14 +144,18 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
       setIsUploading(false);
     }
   };
-  
+
+  const totalAmount = calculateTotal() + freightCost;
+
+  console.log(totalAmount)
 
   const finalizePurchase = async (receiptURL = '') => {
-    if (!paymentMethod) {
+    if (!paymentMethod) {    
       setToastMessage('Por favor, selecione um método de pagamento.');
-      setShowToast(true);
+      setShowToast(true); 
       return;
     }
+    console.log(totalAmount)
 
     if (userData) {
       setIsProcessing(true);
@@ -145,7 +173,7 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
           email: userData.email,
           phone: userData.phone,
           items: cartItems,
-          total: calculateTotal(),
+          total: totalWithFreight,
           address: userData.address || 'Endereço não fornecido',
           cep: userData.cep || 'CEP não fornecido',
           cpf: userData.cpf || 'CPF não fornecido',
@@ -222,11 +250,11 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
       <div style={{ marginTop: '20px' }}>
         {paymentMethod === 'pix' && <PixPayment />}
         {paymentMethod === 'bankTransfer' && <BankTransferPayment />}
-        {/*{paymentMethod === 'boleto' && <BoletoPayment />}
-        {paymentMethod === 'digitalWallet' && <DigitalWalletPayment />}*/}
+        {paymentMethod === 'boleto' && <BoletoPayment />}
+        {paymentMethod === 'digitalWallet' && <DigitalWalletPayment />}
       </div>
 
-      {(paymentMethod === 'bankTransfer' || paymentMethod === 'pix') && (
+      {(paymentMethod === 'bankTransfer' || paymentMethod === 'pix' || paymentMethod === 'digitalWallet') && (
         <div style={{ marginTop: '20px' }}>
           <Form.Group controlId="formFile">
             <Form.Label>Envie o comprovante:</Form.Label>
@@ -246,13 +274,6 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems }) => 
           )}
         </div>
       )}
-
-      {(paymentMethod === 'digitalWallet' || paymentMethod === 'boleto') && (
-              <div style={{ marginTop: '20px' }}>
-                 <p><strong>Forma de Pagamento </strong></p>
-                <p><strong>Indisponível no Momento</strong></p>
-              </div>
-            )}
 
 
       <div className='centr'>

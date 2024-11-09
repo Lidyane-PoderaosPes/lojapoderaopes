@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button, Modal } from 'react-bootstrap';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { collection, getDocs } from 'firebase/firestore'; // Corrigido
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../data/firebaseConfig';
 import CartModal from './CartModal';
 import FinalizePurchase from './FinalizePurchase'; 
+import ShippingCalculator from './ShippingCalculator'; 
 import '../style/Cart.css';
 
 // Mapeamento de cores
@@ -36,23 +37,11 @@ const Cart = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedProductImages, setSelectedProductImages] = useState([]); 
-  const [showFinalizeModal, setShowFinalizeModal] = useState(false); // Controle para o modal de Finalizar Compra
+  const [showFinalizeModal, setShowFinalizeModal] = useState(false);
+  const [shippingCost, setShippingCost] = useState(0);
   const auth = getAuth();
-
   // Função para buscar produtos
-  const fetchProducts = async () => {
-    try {
-      const productsCollection = collection(db, 'products');
-      const productSnapshot = await getDocs(productsCollection);
-      const productList = productSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setProducts(productList);
-    } catch (error) {
-      console.error("Erro ao buscar produtos: ", error);
-    }
-  };
+ 
 
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
@@ -109,15 +98,32 @@ const Cart = () => {
     setShowImageModal(false);
   };
 
-  // Função para abrir o modal de finalizar compra
   const handleShowFinalizeModal = () => setShowFinalizeModal(true);
   const handleCloseFinalizeModal = () => setShowFinalizeModal(false);
 
+  const calculateTotalWithFreight = () => {
+    const subtotal = parseFloat(calculateTotal());
+    return (subtotal + shippingCost).toFixed(2);
+  };
+  
   return (
     <div className="cart-container mt-5">
       <h1 className="text-center mb-4">Carrinho</h1>
       {cartItems.length === 0 ? (
-        <p className="text-center">Seu carrinho está vazio.</p>
+        <div className="text-center">
+        <p>Seu carrinho está vazio.</p>
+        <hr />
+        <p>
+          ✔ <strong>Após confirmação de pagamento, a entrega é realizada em até 10 dias úteis.</strong>
+        </p>
+        <p>
+          ✔ <strong>Política de Trocas:</strong> Realizamos trocas com o frete por nossa conta somente se o produto apresentar defeito de fabricação.
+          <br />
+          ✔ Caso queira trocar por outro motivo, o frete será por conta do cliente.
+        </p>
+        <p>Explore nossos produtos e adicione itens ao seu carrinho!</p>
+      </div>
+      
       ) : (
         <>
           <div className="orh">
@@ -152,22 +158,48 @@ const Cart = () => {
               </Card>
             ))}
           </div>
+          
 
-          <h3 className="text-end cart-total">Total: R$ {calculateTotal()}</h3>
+          {/* Ajuste da seção para exibição lado a lado */}
+          <div className="shipp-section d-flex justify-content-between mt-4">
+            <div className="shipping-section flex-fill me-3">
+              <ShippingCalculator cartItems={cartItems} setShippingCost={setShippingCost} />
+            </div>
 
-          <Button variant="primary" onClick={handleShowFinalizeModal} className="botao-purchase">
-            Finalizar Carrinho
-          </Button>
+            <div className="totals-section flex-fill ms-3">
+              <h3 className="text-end cart-total">Total (sem frete): R$ {calculateTotal()}</h3>
+              {shippingCost > 0 && (
+                <h4 className="text-end cart-total text-success">
+                  Total com Frete: R$ {(parseFloat(calculateTotal()) + shippingCost).toFixed(2)}
+                </h4>
+              )}
+            </div>
+          </div>
+
+          <div className="shipp-section d-flex justify-content-center align-items-center mt-1" style={{ minHeight: '5vh' }}>
+            <Button onClick={handleShowFinalizeModal} className="botao-purchase">
+              Finalizar Carrinho
+            </Button>
+          </div>
+
+         
 
           <Modal show={showFinalizeModal} onHide={handleCloseFinalizeModal} centered>
             <Modal.Header closeButton>
-              <Modal.Title >Finalizar Compra</Modal.Title>
+              <Modal.Title>Finalizar Compra</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <FinalizePurchase user={user} cartItems={cartItems} calculateTotal={calculateTotal} setCartItems={setCartItems} />
+              <FinalizePurchase 
+                user={user} 
+                cartItems={cartItems} 
+                calculateTotal={calculateTotal} 
+                setCartItems={setCartItems} 
+                totalWithFreight={calculateTotalWithFreight()} // Chamada da nova função
+              />
             </Modal.Body>
-           
-          </Modal></>
+          </Modal>
+
+        </>
       )}
 
       <Modal show={showImageModal} onHide={closeImageModal} size="lg" centered>

@@ -6,6 +6,7 @@ import AddProduct from '../components/AddProduct';
 import Cart from '../components/Cart';
 import Auth from '../components/Auth';
 import NotFound from '../components/NotFound';
+import SoldProducts from '../components/SoldProducts';
 import Navbar from '../components/Navbar';
 import About from '../components/About';
 import Footer from '../components/Footer'; // Importando o Footer
@@ -45,6 +46,7 @@ const AppRoutes = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/auth" element={<Auth onLogin={setUser} />} />
           <Route path="/about" element={<About />} />
+          <Route path="/sold-products" element={user ? <SoldProducts /> : <Auth onLogin={setUser} />} />
           <Route path="*" element={<NotFound />} />
         </RouterRoutes>
       

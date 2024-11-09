@@ -1,17 +1,15 @@
-// src/components/Navbar.js
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
-import { useCart } from '../context/CartContext'; // Importe o contexto
-import '../style/Navbar.css'; // Certifique-se de ter o arquivo CSS atualizado
+import { useCart } from '../context/CartContext';
+import '../style/Navbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import logo from '../assets/logo.jpg'; // Caminho correto para a imagem
+import logo from '../assets/logo.jpg';
 
 const Navbar = ({ user }) => {
-  const { cartItems } = useCart(); // Obtenha os itens do carrinho do contexto
+  const { cartItems } = useCart();
   const auth = getAuth();
   const navigate = useNavigate();
 
@@ -19,7 +17,7 @@ const Navbar = ({ user }) => {
     signOut(auth)
       .then(() => {
         console.log('Usuário deslogado com sucesso');
-        navigate('/'); // Redirecionar para a Home após o logout
+        navigate('/');
       })
       .catch((error) => {
         console.error('Erro ao fazer logout', error);
@@ -30,11 +28,7 @@ const Navbar = ({ user }) => {
     <nav className="navbar navbar-expand-lg custom-navbar">
       <div className="container custom-navbar-container d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center logo-container">
-          <img
-            src={logo}
-            alt="Logo"
-            className="rounded-circle logo-image"
-          />
+          <img src={logo} alt="Logo" className="rounded-circle logo-image" />
           <Link className="navbar-brand custom-brand ms-2" to="/">
             Poder aos Pés
           </Link>
@@ -69,27 +63,35 @@ const Navbar = ({ user }) => {
                 Sobre Nós
               </Link>
             </li>
-            {user && user.email === 'adm@adm.com' ? (
-              <li className="nav-item">
-                <Link className="nav-link custom-link" to="/add-product">
-                  Cadastrar Produtos
-                </Link>
-              </li>
-            ) : (
-              user && (
+
+            {/* Links específicos para o administrador */}
+            {user && user.email === 'adm@adm.com' && (
+              <>
                 <li className="nav-item">
-                  <Link className="nav-link custom-link" to="/cart" aria-label="Carrinho">              
-                    Carrinho
-                    <FaShoppingCart size={20} />
-                    {cartItems > 0 && (
-                      <span className="badge custom-cart-badge">
-                        {cartItems}
-                      </span>
-                    )}
+                  <Link className="nav-link custom-link" to="/add-product">
+                    Cadastrar Produtos
                   </Link>
                 </li>
-              )
+                <li className="nav-item">
+                  <Link className="nav-link custom-link" to="/sold-products">
+                    Produtos Vendidos
+                  </Link>
+                </li>
+              </>
             )}
+
+            {user && user.email !== 'adm@adm.com' && (
+              <li className="nav-item">
+                <Link className="nav-link custom-link" to="/cart" aria-label="Carrinho">
+                  Carrinho
+                  <FaShoppingCart size={20} />
+                  {cartItems > 0 && (
+                    <span className="badge custom-cart-badge">{cartItems}</span>
+                  )}
+                </Link>
+              </li>
+            )}
+
             {user ? (
               <>
                 <li className="nav-item">
