@@ -56,6 +56,15 @@
   color: #28a745; /* Cor verde para destacar o custo de envio */
   margin-top: 10px; /* Adiciona espaço no topo */
 }
+.shipping-button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+button {
+  cursor: default; /* Altera o cursor para o padrão */
+}
+
 
 /* Responsividade para telas pequenas */
 @media (max-width: 768px) {
@@ -66,5 +75,11 @@
 
   .shipping-button {
       padding: 12px 25px; /* Botão um pouco maior em telas pequenas */
+      pointer-events: auto;
+      opacity: 1;
+      justify-content: center;
+      align-items: center;
   }
+  
+  
 }
