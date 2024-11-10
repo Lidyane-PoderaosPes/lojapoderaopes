@@ -67,4 +67,10 @@
       padding: 12px 25px; /* Botão um pouco maior em telas pequenas */
       cursor: pointer !important;
   }
+  .shipping-cost {
+    font-weight: bold;
+    font-size: 1.2em; /* Aumenta o tamanho da fonte */
+    color: #28a745; /* Cor verde para destacar o custo de envio */
+    margin-top: 10px; /* Adiciona espaço no topo */
+  }
 }

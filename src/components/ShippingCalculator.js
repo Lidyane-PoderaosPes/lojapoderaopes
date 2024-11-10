@@ -122,8 +122,6 @@ const ShippingCalculator = ({ cartItems, setShippingCost, user }) => {
         Calcular Frete
       </button>
 
-
-
       {shippingCost > 0 && (
         <p className="mt-3">Custo do Frete: R$ {shippingCost.toFixed(2)}</p>
       )}
