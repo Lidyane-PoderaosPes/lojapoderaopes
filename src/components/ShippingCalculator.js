@@ -108,7 +108,7 @@ const ShippingCalculator = ({ cartItems, setShippingCost, user }) => {
           disabled // Desabilita o campo para que o usuário não possa alterar o CEP
         />
       </Form.Group>
-      <Button variant="secondary" onClick={calculateShipping} className="mt-2">
+      <Button  onClick={calculateShipping} className="shipping-button">
         Calcular Frete
       </Button>
       {shippingCost > 0 && (

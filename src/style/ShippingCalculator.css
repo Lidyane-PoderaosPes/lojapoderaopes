@@ -32,17 +32,20 @@
 }
 
 .shipping-button {
-  background-color: #007bff;
+  background-color: #E1BEE7;
   border: none;
   color: white;
-  padding: 10px 20px; /* Aumenta o tamanho do botão */
+  padding: 1px 1px 1px; /* Aumenta o tamanho do botão */
   border-radius: 4px;
   transition: background-color 0.3s, transform 0.2s; /* Adiciona transição suave */
-  width: 100%; /* O botão ocupa toda a largura disponível */
+  width: 80%; /* O botão ocupa toda a largura disponível */
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 .shipping-button:hover {
-  background-color: #0056b3;
+  background-color: #F08080;
   transform: translateY(-2px); /* Efeito de leve elevação */
   cursor: pointer;
 }
