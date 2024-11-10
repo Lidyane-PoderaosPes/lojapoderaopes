@@ -109,11 +109,11 @@ const ShippingCalculator = ({ cartItems, setShippingCost, user }) => {
         />
       </Form.Group>
       <button 
-         
-          onClick={calculateShipping} 
-          className="shipping-button"
-        >
-          Calcular Frete
+        onClick={calculateShipping} 
+        onTouchStart={calculateShipping} // Adiciona suporte para toque em dispositivos móveis
+        className="shipping-button"
+      >
+        Calcular Frete
       </button>
 
 
