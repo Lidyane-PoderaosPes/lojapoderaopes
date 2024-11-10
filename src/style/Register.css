@@ -1,4 +1,27 @@
-.register-btn {
+.auth-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .auth-input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .auth-input:focus {
+    outline: none;
+    border-color: #FAB1B1; /* Cor de foco para combinar com o botão */
+  }
+  
+  .register-btn {
     background-color: #FAB1B1; /* Cor primária suave */
     border: none;
     width: 100%;
@@ -7,10 +30,15 @@
     color: white; /* Cor do texto em branco para contraste */
     border-radius: 5px; /* Bordas levemente arredondadas */
     transition: background-color 0.3s ease, transform 0.2s ease; /* Suave transição para o hover */
-}
-
-.register-btn:hover {
+  }
+  
+  .register-btn:hover {
     background-color: #F08080; /* Tom mais escuro e harmonioso de vermelho suave */
     transform: translateY(-2px); /* Leve elevação no hover */
     cursor: pointer; /* Mudança do cursor para indicar interação */
-}
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
