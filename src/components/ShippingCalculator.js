@@ -109,12 +109,19 @@ const ShippingCalculator = ({ cartItems, setShippingCost, user }) => {
         />
       </Form.Group>
       <button 
-        onClick={calculateShipping} 
-        onTouchStart={calculateShipping} // Adiciona suporte para toque em dispositivos móveis
+        onClick={(e) => {
+          e.preventDefault(); // Evita o comportamento padrão do clique
+          calculateShipping();
+        }}
+        onTouchStart={(e) => {
+          e.preventDefault(); // Evita comportamentos padrão de touch
+          calculateShipping();
+        }}
         className="shipping-button"
       >
         Calcular Frete
       </button>
+
 
 
       {shippingCost > 0 && (
