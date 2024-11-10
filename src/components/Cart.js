@@ -161,9 +161,9 @@ const Cart = () => {
           
 
           {/* Ajuste da seção para exibição lado a lado */}
-          <div className="shipp-section d-flex justify-content-between mt-4">
-            <div className="shipping-section flex-fill me-3">
-              <ShippingCalculator cartItems={cartItems} setShippingCost={setShippingCost}  user={user}  />
+          <div className="shipp-section d-flex flex-wrap justify-content-between mt-4">
+            <div className="shipping-section flex-fill me-3 mb-3">
+              <ShippingCalculator cartItems={cartItems} setShippingCost={setShippingCost} user={user} />
             </div>
 
             <div className="totals-section flex-fill ms-3">
@@ -175,6 +175,7 @@ const Cart = () => {
               )}
             </div>
           </div>
+
 
           <div className="shipp-section d-flex justify-content-center align-items-center mt-1" style={{ minHeight: '5vh' }}>
             <Button onClick={handleShowFinalizeModal} className="botao-purchase">
