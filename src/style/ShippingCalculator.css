@@ -35,13 +35,12 @@
   background-color: #E1BEE7;
   border: none;
   color: white;
-  padding: 1px 1px 1px; /* Aumenta o tamanho do botão */
+  padding: 10px 20px; /* Aumenta o tamanho do botão */
   border-radius: 4px;
   transition: background-color 0.3s, transform 0.2s; /* Adiciona transição suave */
-  width: 80%; /* O botão ocupa toda a largura disponível */
+  width: 100%; /* O botão ocupa toda a largura disponível */
   margin-top: 10px;
-  justify-content: center;
-  align-items: center;
+  cursor: pointer !important;
 }
 
 .shipping-button:hover {
@@ -56,15 +55,6 @@
   color: #28a745; /* Cor verde para destacar o custo de envio */
   margin-top: 10px; /* Adiciona espaço no topo */
 }
-.shipping-button:disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
-}
-
-button {
-  cursor: default; /* Altera o cursor para o padrão */
-}
-
 
 /* Responsividade para telas pequenas */
 @media (max-width: 768px) {
@@ -75,11 +65,6 @@ button {
 
   .shipping-button {
       padding: 12px 25px; /* Botão um pouco maior em telas pequenas */
-      pointer-events: auto;
-      opacity: 1;
-      justify-content: center;
-      align-items: center;
+      cursor: pointer !important;
   }
-  
-  
 }
