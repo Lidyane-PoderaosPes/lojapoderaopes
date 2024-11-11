@@ -151,6 +151,7 @@ const ProductForm = ({ product, onChange, onFileChange, message }) => {
           required
         >
           <option value="">Selecione...</option>
+          <option value="Mocassim">Mocassim</option>
           <option value="Sandálias">Sandálias</option>
           <option value="Rasteirinhas">Rasteirinhas</option>
           <option value="Sapatilhas">Sapatilhas</option>
