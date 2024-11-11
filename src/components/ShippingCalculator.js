@@ -22,22 +22,36 @@ const ShippingCalculator = ({ cartItems, setShippingCost, user }) => {
   };
 
   // Função para calcular a distância usando a API OSRM
-  const getDistanceFromBrasilia = async (zipCode) => {
-    const destination = await getCoordinatesFromZipCode(zipCode);
+const getDistanceFromBrasilia = async (zipCode) => {
+  const destination = await getCoordinatesFromZipCode(zipCode);
 
-    if (!destination) {
-      alert('Não foi possível obter as coordenadas do CEP.');
-      return null;
+  if (!destination) {
+    alert('Não foi possível obter as coordenadas do CEP.');
+    return null;
+  }
+
+  // Usar a API OSRM com HTTPS para calcular a distância entre Brasília e o destino
+  try {
+    const response = await fetch(`https://router.project-osrm.org/route/v1/driving/${brasiliaCoordinates.lon},${brasiliaCoordinates.lat};${destination.lon},${destination.lat}?overview=false`);
+    
+    if (!response.ok) {
+      throw new Error('Erro na requisição para a API OSRM');
     }
 
-    // Usar a API OSRM para calcular a distância entre Brasília e o destino
-    const response = await fetch(`http://router.project-osrm.org/route/v1/driving/${brasiliaCoordinates.lon},${brasiliaCoordinates.lat};${destination.lon},${destination.lat}?overview=false`);
     const data = await response.json();
     if (data.routes && data.routes[0]) {
       return data.routes[0].legs[0].distance / 1000; // Distância em quilômetros
+    } else {
+      alert('Não foi possível calcular a distância.');
+      return null;
     }
+  } catch (error) {
+    console.error('Erro ao buscar dados da API OSRM:', error);
+    alert('Houve um erro ao calcular a distância.');
     return null;
-  };
+  }
+};
+
 
   // Função para obter os dados do usuário (incluindo o CEP) do Firestore
   const getUserData = async (uid) => {
