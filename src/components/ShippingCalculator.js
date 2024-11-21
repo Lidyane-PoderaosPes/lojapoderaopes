@@ -9,7 +9,7 @@ const ShippingCalculator = ({ cartItems, setShippingCost, user }) => {
   const [userCep, setUserCep] = useState(''); // Estado para armazenar o CEP do usuário
 
   // Coordenadas de Brasília (saída)
-  const brasiliaCoordinates = { lat: -15.76790, lon: -47.78202 };
+  const brasiliaCoordinates = { lat: -15.74868, lon: -47.76609 };
 
   // Função para obter as coordenadas de um CEP usando Nominatim (OpenStreetMap)
   const getCoordinatesFromZipCode = async (zipCode) => {
@@ -95,7 +95,7 @@ const getDistanceFromBrasilia = async (zipCode) => {
     const totalWeight = cartItems.reduce((sum, item) => sum + (item.weight || 1) * item.quantity, 0);
 
     const baseCost = 5; // Custo base de envio
-    const additionalCostPerKm = 0.01; // Reduzido de 0.5 para diminuir o impacto da distância
+    const additionalCostPerKm = 0.001; // Reduzido de 0.5 para diminuir o impacto da distância
     const additionalCostPerKg = 1; // Reduzido de 5 para reduzir o custo com peso
 
     // Calcular o custo baseado na distância
