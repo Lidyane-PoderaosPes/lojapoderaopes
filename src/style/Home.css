@@ -132,67 +132,113 @@
   max-height: 95vh; /* Limita a altura do modal para garantir que ele não exceda a tela */
 }
 
-.zoom-container {
+.image-scroll-container {
+  overflow-x: auto; /* Permite rolagem horizontal */
+  overflow-y: hidden; /* Impede rolagem vertical */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 1rem; /* Espaçamento entre as imagens */
+  scrollbar-width: none; /* Oculta a barra de rolagem em navegadores compatíveis */
+  -ms-overflow-style: none; /* Oculta a barra de rolagem no IE e Edge */
+  scroll-snap-type: x mandatory; /* Adiciona alinhamento por rolagem */
+  cursor: grab;
+}
+
+.image-scroll-container::-webkit-scrollbar {
+  display: none; /* Oculta a barra de rolagem em navegadores Webkit */
+}
+
+.image-scroll-container:active {
+  cursor: grabbing;
+}
+
+.flex-nowrap {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.zoom-container {
+  flex: 0 0 100%; /* Cada item ocupa 100% do contêiner */
+  scroll-snap-align: center; /* Centraliza o item visível */
 }
 
 .zoom-image {
-  max-width: 100%;
-  height: auto;
-  transition: transform 0.3s ease; /* Suaviza o efeito de zoom */
+  width: 100%;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
 }
+
 
 .zoom-image:hover {
   transform: scale(2.5); /* Ajuste o valor para a intensidade do zoom */
   cursor: zoom-out;
 }
 
-/* Estilos responsivos para o modal de imagem */
+.scroll-container {
+  overflow-x: auto; /* Permite rolagem horizontal */
+  overflow-y: hidden; /* Impede rolagem vertical */
+  display: flex;
+   /* Espaço entre os itens */
+
+  scrollbar-width: none; /* Oculta a barra de rolagem em navegadores compatíveis */
+  -ms-overflow-style: none; /* Oculta a barra de rolagem no IE e Edge */
+  cursor: grab; /* Muda o cursor para "pegar" */
+  scroll-snap-type: x mandatory; /* Adiciona "snap" para itens */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Oculta a barra de rolagem em navegadores Webkit */
+}
+
+.scroll-container:active {
+  cursor: grabbing;
+}
+
+.flex-nowrap {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.product-card {
+ 
+  scroll-snap-align: center; /* Ajuda a alinhar os itens no "snap" */
+}
+
 /* Estilos responsivos para o modal de imagem */
 @media (max-width: 768px) {
   .zoom-image {
-    max-width: 90%; /* Aumenta a imagem para ocupar mais do espaço disponível */
-    height: auto;
-  }
-  .modal-dialog {
-    max-width: 100%;
-    margin: 0;
-    height: 80%;
+    max-width: 90%; /* Imagem ocupa até 90% da largura disponível */
+    max-height: 80vh; /* Imagem ocupa até 80% da altura da viewport */
+    width: auto; /* Ajusta largura proporcional */
+    height: auto; /* Ajusta altura proporcional */
+    border-radius: 5px; /* Borda arredondada */
+    transition: transform 0.2s ease-out;
+    transform-origin: center center; /* Centraliza o zoom */
   }
 
   .zoom-container {
-    width: 100%;
     display: flex;
-    justify-content: center; /* Centraliza a imagem horizontalmente */
-    align-items: center; /* Centraliza a imagem verticalmente */
-    margin-bottom: 5px; /* Espaço entre imagens */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    margin-bottom: 10px; /* Espaçamento entre imagens */
+    width: 100%; /* Contêiner ocupa a largura total */
   }
 
-  .modal-body .row {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+  .modal-dialog {
+    max-width: 100%; /* Largura máxima para dispositivos móveis */
+    margin: 0 auto; /* Centraliza horizontalmente */
+    display: flex;
+    justify-content: center; /* Centraliza conteúdo horizontalmente */
+    align-items: center; /* Centraliza conteúdo verticalmente */
+    height: auto; /* Ajusta altura conforme necessário */
+    padding: 1rem; /* Espaçamento interno */
   }
 
-  .product-image {
-    width: 80% ; /* Aumenta a largura da imagem */
-    height: auto; /* Ajusta a altura automaticamente */
-    border-radius: 5px; /* Borda arredondada */
-  }
-
-  .zoom-image {
-    width: 90%; /* Aumenta a largura da imagem dentro do contêiner */
-    max-width: 350px; /* Define um tamanho máximo maior para as imagens */
-    transition: transform 0.1s ease-out;
-    transform-origin: center center; /* Centraliza o ponto de origem do zoom */
-    margin-bottom: 10px; /* Espaço extra para separar imagens em dispositivos móveis */
-  }
-
-  .zoom-image:hover {
-    transform: scale(2.5); /* Intensidade do zoom */
-    cursor: zoom-out;
+  .modal-body {
+    display: flex;
+    justify-content: center; /* Centraliza conteúdo horizontalmente */
+    align-items: center; /* Centraliza conteúdo verticalmente */
+    flex-direction: column; /* Exibe o conteúdo em coluna */
+    width: 100%; /* Ocupa largura total do modal */
+    padding: 0; /* Remove espaçamento padrão */
   }
 }
