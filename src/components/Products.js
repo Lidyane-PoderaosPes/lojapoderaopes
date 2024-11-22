@@ -24,6 +24,15 @@ const Products = ({ updateCartCount }) => {
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
   const [zoomStyles, setZoomStyles] = useState({});
+  const [filterName, setFilterName] = useState('');
+  const [filterPriceRange, setFilterPriceRange] = useState([0, Infinity]);
+
+  const filteredProducts = products.filter(product => {
+    const matchesName = product.name.toLowerCase().includes(filterName.toLowerCase());
+    const matchesPrice = product.price >= filterPriceRange[0] && product.price <= filterPriceRange[1];
+    return matchesName && matchesPrice;
+  });
+  
 
   const openImageModal = (images) => {
     setSelectedProductImages(images);
@@ -141,10 +150,52 @@ const Products = ({ updateCartCount }) => {
     }
   };
 
+  const handlePreOrder = (product) => {
+    console.log(`Produto ${product.name} encomendado!`);
+    // Insira a lógica de envio de pedidos ou qualquer outra funcionalidade necessária.
+  };
+  
+
 
   return (
     <div className="product-container">
-      <h1 className="text-center mb-4 title">Produtos</h1>
+
+      <div className="filters-container">
+        <div className="search-filter">
+          <input
+            type="text"
+            placeholder="Buscar por nome"
+            value={filterName}
+            onChange={(e) => setFilterName(e.target.value)}
+            className="filter-input"
+          />
+        </div>
+
+        <div className="price-filter">
+          <label className="filter-label">Faixa de preço:</label>
+          <div className="price-inputs">
+            <input
+              type="number"
+              placeholder="Mínimo"
+              onChange={(e) => setFilterPriceRange([+e.target.value || 0, filterPriceRange[1]])}
+              className="price-input"
+            />
+            <span className="price-separator">-</span>
+            <input
+              type="number"
+              placeholder="Máximo"
+              onChange={(e) => setFilterPriceRange([filterPriceRange[0], +e.target.value || Infinity])}
+              className="price-input"
+            />
+             <h1 className="text-center ">Produtos</h1>
+          </div>
+         
+        </div>
+        
+      </div>
+
+
+
 
       {showAlert && (
         <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
@@ -153,7 +204,7 @@ const Products = ({ updateCartCount }) => {
       )}
 
       <Row className="justify-content-center">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <Col md={4} key={product.id} className="mb-4">
             <Card className="product-card shadow-sm">
               <Card.Body>
@@ -215,11 +266,22 @@ const Products = ({ updateCartCount }) => {
                     </Button>
                   </div>
                 ) : (
-                  <Button className="btn btn-primary add-to-cart" onClick={() => handleAddToCart(product)}>
-                    Selecionar Produto
-                  </Button>
-                )}
-              </Card.Body>
+                  <div className="button-container">
+                    {product.stock === 0 ? (
+                      <Button className="btn btn-warning encomendar" onClick={() => handlePreOrder(product)}>
+                        Encomendar
+                      </Button>
+                    ) : (
+                      <Button
+                        className="btn btn-primary add-to-cart"
+                        onClick={() => handleAddToCart(product)}
+                      >
+                        Selecionar Produto
+                      </Button>
+                    )}
+                  </div>
+                    )}
+                  </Card.Body>
             </Card>
           </Col>
         ))}

@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../data/firebaseConfig';
-import { Card, Col, Row, Modal, Button } from 'react-bootstrap';
+import { Card, Modal, Carousel, Col, Row } from 'react-bootstrap';
 import '../style/Home.css';
 import Footer from '../components/Footer';
 
@@ -11,7 +11,6 @@ const Home = () => {
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedProductImages, setSelectedProductImages] = useState([]);
   const [zoomStyles, setZoomStyles] = useState({});
-  const scrollContainerRef = useRef(null);
 
   const openImageModal = (images) => {
     setSelectedProductImages(images);
@@ -25,7 +24,6 @@ const Home = () => {
   };
 
   const handleZoomMove = (e, imageIndex) => {
-    // Detecta se é um toque em dispositivo móvel ou mouse em desktop
     const isTouchEvent = e.type === 'touchmove';
     const clientX = isTouchEvent ? e.touches[0].clientX : e.clientX;
     const clientY = isTouchEvent ? e.touches[0].clientY : e.clientY;
@@ -55,7 +53,7 @@ const Home = () => {
       try {
         const productsCollection = collection(db, 'products');
         const productSnapshot = await getDocs(productsCollection);
-        const productList = productSnapshot.docs.map(doc => ({
+        const productList = productSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
@@ -70,137 +68,83 @@ const Home = () => {
     fetchProducts();
   }, []);
 
-  // Função para habilitar drag-and-scroll
-  const enableScroll = () => {
-    const container = scrollContainerRef.current;
-    let isDragging = false;
-    let startX;
-    let scrollLeft;
-
-    if (container) {
-      container.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.pageX - container.offsetLeft;
-        scrollLeft = container.scrollLeft;
-      });
-
-      container.addEventListener('mouseleave', () => {
-        isDragging = false;
-      });
-
-      container.addEventListener('mouseup', () => {
-        isDragging = false;
-      });
-
-      container.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - container.offsetLeft;
-        const walk = (x - startX) * 2; // Velocidade do scroll
-        container.scrollLeft = scrollLeft - walk;
-      });
-    }
-  };
-
-  useEffect(() => {
-    enableScroll();
-  }, []); // Certifique-se de que a função seja chamada apenas uma vez ao montar
-
-  const handleMouseDown = (e) => {
-    if (!scrollContainerRef.current) return; // Verifica se o ref está definido
-    const container = scrollContainerRef.current;
-    container.isDown = true;
-    container.startX = e.pageX - container.offsetLeft;
-    container.scrollLeft = container.scrollLeft;
-  };
-  
-  const handleMouseLeave = () => {
-    if (!scrollContainerRef.current) return; // Verifica se o ref está definido
-    const container = scrollContainerRef.current;
-    container.isDown = false;
-  };
-  
-  const handleMouseUp = () => {
-    if (!scrollContainerRef.current) return; // Verifica se o ref está definido
-    const container = scrollContainerRef.current;
-    container.isDown = false;
-  };
-  
-  const handleMouseMove = (e) => {
-    if (!scrollContainerRef.current || !scrollContainerRef.current.isDown) return; // Verifica se o ref e `isDown` estão definidos
-    e.preventDefault();
-    const container = scrollContainerRef.current;
-    const x = e.pageX - container.offsetLeft;
-    const walk = (x - container.startX) * 1.5; // Velocidade de arrasto
-    container.scrollLeft = container.scrollLeft - walk;
-  };
-  
+  // Dividir produtos em grupos de 3
+  const groupedProducts = [];
+  for (let i = 0; i < products.length; i += 3) {
+    groupedProducts.push(products.slice(i, i + 3));
+  }
 
   return (
     <div className="home-container">
-      <div className="hero-section">
+      <div className="hero-section text-center">
         <h1 className="hero-title">Bem-vindo à loja Poder aos Pés</h1>
         <p className="hero-subtitle">Explore nossos produtos de calçados femininos!</p>
       </div>
 
       <div className="featured-products">
-        <h2 className="section-title">Produtos em Destaque</h2>
+        <h2 className="section-title text-center">Produtos em Destaque</h2>
         {loading ? (
-          <p>Carregando produtos...</p>
+          <p className="text-center">Carregando produtos...</p>
         ) : (
-          <div
-          className="image-scroll-container"
-          ref={scrollContainerRef} // Ref conectado corretamente
-          onMouseDown={handleMouseDown}
-          onMouseLeave={handleMouseLeave}
-          onMouseUp={handleMouseUp}
-          onMouseMove={handleMouseMove}
-        >
-          <Row className="flex-nowrap">
-            {products.slice(0, 5).map((product, index) => (
-              <Col md={4} key={product.id} className={`mb-4 ${index === 3 ? 'show-half' : ''}`}>
-                <Card className="product-card">
-                  <Card.Img
-                    variant="top"
-                    src={product.imageUrls[0]}
-                    className="product-image"
-                    alt={product.name}
-                    onClick={() => openImageModal(product.imageUrls)}
-                    style={{ cursor: 'pointer' }}
-                  />
-                  <Card.Body>
-                    <Card.Title className="product-name">{product.name}</Card.Title>
-                    <Card.Text className="product-price">
-                      Preço: R$ {product.price.toFixed(2)}
-                    </Card.Text>
-                    <Card.Text className="product-description">
-                      {product.description}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
+          <Carousel
+            interval={10000}
+            controls
+            indicators
+            nextIcon={<span className="carousel-arrow carousel-arrow-next">&rsaquo;</span>}
+            prevIcon={<span className="carousel-arrow carousel-arrow-prev" >&lsaquo;</span>}
+          >
+            {groupedProducts.map((items, idx) => (
+              <Carousel.Item key={idx}>
+                <div className="d-flex justify-content-center flex-wrap">
+                  {items.map((product) => (
+                    <Card className="product-card text-center mx-2" key={product.id} style={{ width: '200px', height: '350px' }}>
+                      <Card.Img
+                        variant="top"
+                        src={product.imageUrls[0]}
+                        className="product-image"
+                        alt={product.name}
+                        onClick={() => openImageModal(product.imageUrls)}
+                        style={{ cursor: 'pointer', objectFit: 'cover', height: '150px' }}
+                      />
+                      <Card.Body>
+                        <Card.Title className="product-name">{product.name}</Card.Title>
+                        <Card.Text className="product-price">Preço: R$ {product.price.toFixed(2)}</Card.Text>
+                        <Card.Text className="product-description">{product.description}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  ))}
+                </div>
+              </Carousel.Item>
             ))}
-          </Row>
-        </div>
+          </Carousel>
         )}
       </div>
 
-      {/* Modal para exibir as imagens do produto selecionado */}
-        <Modal show={showImageModal} onHide={closeImageModal} size="lg" centered>
-          <Modal.Header closeButton></Modal.Header>
-          <Modal.Body className="image-modal-body">
-            <div
-              className="image-scroll-container"
-              ref={scrollContainerRef}
-              onMouseDown={handleMouseDown}
-              onMouseLeave={handleMouseLeave}
-              onMouseUp={handleMouseUp}
-              onMouseMove={handleMouseMove}
-            >
-              <Row className="flex-nowrap">
-                {selectedProductImages && selectedProductImages.length > 0 ? (
-                  selectedProductImages.map((url, index) => (
-                    <Col xs={12} md={3} lg={2} key={index} className="zoom-container">
+      <Modal show={showImageModal} onHide={closeImageModal} size="lg" centered>
+            <Modal.Header closeButton></Modal.Header>
+            <Modal.Body className="image-modal-body" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <Carousel
+                controls
+                indicators
+                interval={null} // Desativa a troca automática
+                wrap={false} // Evita o loop automático ao final da lista
+              >
+                {selectedProductImages.map((url, index) => (
+                  <Carousel.Item key={index}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'relative',
+                      }}
+                    >
+                     <Col  lg={6} key={index} style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                      
+                        position: 'relative',
+                      }}>
                       <Card.Img
                         variant="top"
                         src={url}
@@ -213,14 +157,13 @@ const Home = () => {
                         onTouchEnd={() => handleZoomEnd(index)}
                       />
                     </Col>
-                  ))
-                ) : (
-                  <p>Nenhuma imagem disponível</p>
-                )}
-              </Row>
-            </div>
-          </Modal.Body>
-        </Modal>
+                    </div>
+                  </Carousel.Item>
+                ))}
+                
+              </Carousel>
+            </Modal.Body>
+          </Modal>
 
 
       <Footer />

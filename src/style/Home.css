@@ -57,46 +57,115 @@
   justify-content: center;
   flex-wrap: wrap;
 }
+/* Configuração das setas do carrossel */
+.carousel-arrow {
+  font-size: 30px;
+  color: #6a1b9a; /* Cor da seta */
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
 
+.carousel-arrow:hover {
+  color: #8e24aa; /* Cor ao passar o mouse */
+}
+
+.carousel-arrow-next {
+  right: 15px;
+}
+
+.carousel-arrow-prev {
+  left: 15px;
+}
+
+/* Configuração dos indicadores (barrinhas ou bolinhas) */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.carousel-indicators li {
+  width: 10px;
+  height: 10px;
+  background-color: #6a1b9a; /* Cor padrão */
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-indicators .inactive {
+  background-color: #8e24aa; /* Cor do indicador ativo */
+}
+
+.carousel-indicators .active {
+  background-color: #8e24aa; /* Cor do indicador ativo */
+}
+
+.carousel-indicators [data-bs-target] {
+  box-sizing: content-box;
+  flex: 0 1 auto;
+  width: 30px;
+  height: 3px;
+  padding: 0;
+  margin-right: 3px;
+  margin-left: 3px;
+  text-indent: -999px;
+  cursor: pointer;
+  background-color: #752929 !important;
+  background-clip: padding-box;
+  border: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  opacity: .5;
+  transition: opacity .6s ease;
+}
+
+
+/* Configuração dos cards do carrossel */
 .product-card {
   background-color: #FFF;
   border: 1px solid #E1BEE7; /* Borda leve */
   border-radius: 5px;
-  padding: 10px; /* Diminuindo o padding */
-  margin: 10px;
-  width: 180px; /* Tamanho reduzido dos produtos */
   text-align: center;
   transition: transform 0.2s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidade */
-  height: 95% !important;
+  height: 540px !important;
+  width: 320px !important; /* Tamanho reduzido dos produtos */
+  padding: 10px; /* Diminuindo o padding */
+  margin: 10px;
+  overflow: hidden; /* Impede que conteúdos maiores transbordem */
+  justify-content: space-evenly;
+ 
 }
 
 .product-card:hover {
-  transform: scale(1.05); /* Efeito de destaque ao passar o mouse */
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .product-image {
   width: 60%;
   height: 60% !important;
-  border-radius: 5px; /* Borda arredondada na imagem */
+  object-fit: cover;
+  border-radius: 5px 5px 0 0; /* Canto arredondado só no topo */
 }
 
 .product-name {
   font-weight: bold;
-  margin-top: 8px; /* Ajuste para melhor espaçamento */
+  margin-top: 8px;
 }
 
 .product-price {
-  color: #e63946; /* Cor para o preço */
+  color: #e63946;
   font-weight: bold;
-  margin: 5px 0;
 }
 
 .product-description {
-  color: #333; /* Cor da descrição */
-  font-size: 14px; /* Tamanho da fonte ajustado para descrição */
-  margin: 0; /* Remove margem para manter o card compacto */
+  font-size: 14px;
+  color: #333;
 }
+
+
 
 /* Adicionando estilo para as bolinhas de cores disponíveis */
 .product-colors {
@@ -198,47 +267,96 @@
   flex-wrap: nowrap;
 }
 
-.product-card {
- 
-  scroll-snap-align: center; /* Ajuda a alinhar os itens no "snap" */
-}
+
+
 
 /* Estilos responsivos para o modal de imagem */
 @media (max-width: 768px) {
   .zoom-image {
-    max-width: 90%; /* Imagem ocupa até 90% da largura disponível */
-    max-height: 80vh; /* Imagem ocupa até 80% da altura da viewport */
-    width: auto; /* Ajusta largura proporcional */
-    height: auto; /* Ajusta altura proporcional */
+    width: auto; /* Ajusta largura proporcional à altura */
+    height: auto; /* Garante proporção */
+    max-width: 90%; /* Não excede 90% da largura da tela */
+    max-height: 80vh; /* Não excede 80% da altura da viewport */
     border-radius: 5px; /* Borda arredondada */
     transition: transform 0.2s ease-out;
-    transform-origin: center center; /* Centraliza o zoom */
+    transform-origin: center center;
   }
 
   .zoom-container {
-    display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
+   justify-content: center !important;
+   align-items: center !important;
+     /* Centraliza verticalmente */
     margin-bottom: 10px; /* Espaçamento entre imagens */
-    width: 100%; /* Contêiner ocupa a largura total */
+  }
+
+  .image-scroll-container {
+    overflow-x: auto; /* Rolagem horizontal */
+    overflow-y: hidden; /* Sem rolagem vertical */
+    display: flex;
+    gap: 1rem; /* Espaçamento entre itens */
+    scrollbar-width: none; /* Oculta barra de rolagem */
+    -ms-overflow-style: none; /* Compatibilidade IE/Edge */
+    scroll-snap-type: x mandatory; /* Encaixe ao rolar */
+    height: auto; /* Ajusta a altura automaticamente */
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image-scroll-container::-webkit-scrollbar {
+    display: none; /* Oculta barra de rolagem em navegadores Webkit */
   }
 
   .modal-dialog {
     max-width: 100%; /* Largura máxima para dispositivos móveis */
-    margin: 0 auto; /* Centraliza horizontalmente */
+    margin: 0 auto; /* Centraliza o modal horizontalmente */
+    padding: 1rem; /* Adiciona espaçamento interno */
+    height: auto; /* Ajusta a altura automaticamente */
     display: flex;
-    justify-content: center; /* Centraliza conteúdo horizontalmente */
-    align-items: center; /* Centraliza conteúdo verticalmente */
-    height: auto; /* Ajusta altura conforme necessário */
-    padding: 1rem; /* Espaçamento interno */
+    justify-content: center; /* Centraliza conteúdo */
+    align-items: center; /* Centraliza conteúdo */
   }
 
   .modal-body {
     display: flex;
-    justify-content: center; /* Centraliza conteúdo horizontalmente */
-    align-items: center; /* Centraliza conteúdo verticalmente */
-    flex-direction: column; /* Exibe o conteúdo em coluna */
+    justify-content: center; /* Centraliza o conteúdo no modal */
+    align-items: center;
+    flex-direction: column;
     width: 100%; /* Ocupa largura total do modal */
     padding: 0; /* Remove espaçamento padrão */
+    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+    overflow-y: hidden; /* Evita rolagem vertical */
   }
+
+  .modal-body .flex-nowrap {
+    flex-wrap: nowrap; /* Mantém as imagens em linha */
+  
+  }
+
+  .zoom-image:hover {
+    transform: scale(1.8); /* Menor intensidade de zoom para dispositivos móveis */
+    cursor: zoom-in;
+  }
+
+  .product-image {
+    width: 100%; /* Imagem ocupa toda a largura possível */
+    height: auto; /* Ajusta a altura automaticamente */
+    margin-bottom: 1rem; /* Espaçamento inferior */
+    max-height: calc(100% - 2rem); /* Impede que a imagem ultrapasse o modal */
+  }
+
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    font-size: 30px; /* Ajuste para aumentar o tamanho das setas */
+    background-color: #6A1B9A; /* Cor de fundo da seta */
+    border-radius: 50%; /* Torna as setas circulares */
+    padding: 10px; /* Ajuste de espaçamento interno */
+  }
+
+  .carousel-control-prev-icon:hover,
+  .carousel-control-next-icon:hover {
+    background-color: #4A148C; /* Alteração na cor ao passar o mouse */
+    transition: background-color 0.2s ease;
+  }
+
 }
