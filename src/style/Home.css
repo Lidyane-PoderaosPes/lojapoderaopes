@@ -122,32 +122,43 @@
 
 
 /* Configuração dos cards do carrossel */
-.product-card {
+.product-cards {
   background-color: #FFF;
-  border: 1px solid #E1BEE7; /* Borda leve */
-  border-radius: 5px;
+  border: 1px solid #E1BEE7;
+  border-radius: 10px;
   text-align: center;
   transition: transform 0.2s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidade */
-  height: 540px !important;
-  width: 320px !important; /* Tamanho reduzido dos produtos */
-  padding: 10px; /* Diminuindo o padding */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: 560px !important ;
+  width: 360px ;
+  padding: 10px;
   margin: 10px;
-  overflow: hidden; /* Impede que conteúdos maiores transbordem */
-  justify-content: space-evenly;
- 
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.product-card:hover {
+.product-cards:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Container para centralizar a imagem */
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%; /* Espaço reservado para a imagem */
+}
+
 .product-image {
-  width: 60%;
-  height: 60% !important;
-  object-fit: cover;
-  border-radius: 5px 5px 0 0; /* Canto arredondado só no topo */
+  max-width: 80%; /* Garante que a imagem não exceda o container */
+  max-height: 80%;
+  width: 200px; /* Tamanho fixo horizontal */
+  height: 150px; /* Tamanho fixo vertical */
+  object-fit: cover; /* Garante que a imagem seja cortada proporcionalmente */
+  border-radius: 5px;
 }
 
 .product-name {
@@ -164,7 +175,6 @@
   font-size: 14px;
   color: #333;
 }
-
 
 
 /* Adicionando estilo para as bolinhas de cores disponíveis */
@@ -267,7 +277,25 @@
   flex-wrap: nowrap;
 }
 
+/* Configuração das setas do carrossel */
+.carousel-arrow {
+  font-size: 30px;
+  color: #6a1b9a !important; /* Cor da seta */
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
 
+.carousel-arrow:hover {
+  color: #8e24aa; /* Cor ao passar o mouse */
+}
+
+.carousel-arrow-next {
+  right: 15px;
+}
+
+.carousel-arrow-prev {
+  left: 15px;
+}
 
 
 /* Estilos responsivos para o modal de imagem */
@@ -358,5 +386,25 @@
     background-color: #4A148C; /* Alteração na cor ao passar o mouse */
     transition: background-color 0.2s ease;
   }
+
+  /* Configuração das setas do carrossel */
+.carousel-arrow {
+  font-size: 30px;
+  color: #6a1b9a; /* Cor da seta */
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.carousel-arrow:hover {
+  color: #8e24aa; /* Cor ao passar o mouse */
+}
+
+.carousel-arrow-next {
+  right: 15px;
+}
+
+.carousel-arrow-prev {
+  left: 15px;
+}
 
 }

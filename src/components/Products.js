@@ -161,7 +161,7 @@ const Products = ({ updateCartCount }) => {
     <div className="product-container">
 
       <div className="filters-container">
-        <div className="search-filter">
+        
           <input
             type="text"
             placeholder="Buscar por nome"
@@ -169,11 +169,12 @@ const Products = ({ updateCartCount }) => {
             onChange={(e) => setFilterName(e.target.value)}
             className="filter-input"
           />
-        </div>
+      
 
-        <div className="price-filter">
-          <label className="filter-label">Faixa de preço:</label>
+      
+          
           <div className="price-inputs">
+          <label className="filter-label">Faixa de preço:</label>
             <input
               type="number"
               placeholder="Mínimo"
@@ -190,7 +191,7 @@ const Products = ({ updateCartCount }) => {
              <h1 className="text-center ">Produtos</h1>
           </div>
          
-        </div>
+       
         
       </div>
 
@@ -203,89 +204,94 @@ const Products = ({ updateCartCount }) => {
         </Alert>
       )}
 
-      <Row className="justify-content-center">
-        {filteredProducts.map((product) => (
-          <Col md={4} key={product.id} className="mb-4">
-            <Card className="product-card shadow-sm">
-              <Card.Body>
-                <div className="product-images">
-                  {/* Exibe apenas a imagem na posição 0 inicialmente */}
-                  <Card.Img
-                    variant="top"
-                    src={product.imageUrls[0]}
-                    className="product-image"
-                    onClick={() => openImageModal(product.imageUrls)} // Abre o modal com as imagens do produto
-                  />
-                </div>
-                <Card.Title className="product-name">{product.name}</Card.Title>
-                <Card.Text className="product-price">
-                  Preço: R$ {product.price.toFixed(2)}
-                </Card.Text>
-                
-                <Card.Text className="product-stock">
-                  {product.stock === 0 ? (
-                    <span style={{ color: 'red', fontWeight: 'bold' }}>Produto esgotado</span>
-                  ) : (
-                    `Estoque: ${product.stock} unidades disponíveis`
-                  )}
-                </Card.Text>
-
-                <Card.Text className="product-sizes">
-                  <span>Tamanhos disponíveis:</span>
-                  <div className="size-bullets">
-                    {product.sizes.map((size, index) => (
-                      <span key={index} className="size-bullet">
-                        {size} 
-                      </span>
-                    ))}
-                  </div>
-                </Card.Text>
-
-
-                <Card.Text className="product-colors">
-                  <span>Cores disponíveis:</span>
-                  <div className="color-bullets">
-                    {product.colors.map((color, index) => (
-                      <span
-                        key={index}
-                        className="color-bullet"
-                        style={{ backgroundColor: color }}
-                      ></span>
-                    ))}
-                  </div>
-                </Card.Text>
-                {userEmail === 'adm@adm.com' ? (
-                  <div className="button-container">
-                    <Button className="btn btn-editar" onClick={() => handleEdit(product)}>
-                      <i className="fas fa-edit"></i>
-                      Editar
-                    </Button>
-                    <Button className="btn btn-danger" onClick={() => handleDeleteModal(product)}>
-                      <i className="fas fa-trash"></i>
-                      Excluir
-                    </Button>
-                  </div>
+    <Row className="justify-content-center">
+      {filteredProducts.map((product) => (
+        <Col md={4} key={product.id} className="mb-4 d-flex justify-content-center">
+          <Card className="product-card shadow-sm">
+            <div className="image-container">
+              <Card.Img
+                variant="top"
+                src={product.imageUrls[0]}
+                className="product-image"
+                alt={product.name}
+                onClick={() => openImageModal(product.imageUrls)}
+                style={{ cursor: 'pointer' }}
+              />
+            </div>
+            <Card.Body className="d-flex flex-column align-items-center">
+              <Card.Title className="product-name">{product.name}</Card.Title>
+              <Card.Text className="product-price">
+                Preço: R$ {product.price.toFixed(2)}
+              </Card.Text>
+              <Card.Text className="product-stock">
+                {product.stock === 0 ? (
+                  <span style={{ color: 'red', fontWeight: 'bold' }}>Produto esgotado</span>
                 ) : (
-                  <div className="button-container">
-                    {product.stock === 0 ? (
-                      <Button className="btn btn-warning encomendar" onClick={() => handlePreOrder(product)}>
-                        Encomendar
-                      </Button>
-                    ) : (
-                      <Button
-                        className="btn btn-primary add-to-cart"
-                        onClick={() => handleAddToCart(product)}
-                      >
-                        Selecionar Produto
-                      </Button>
-                    )}
-                  </div>
-                    )}
-                  </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+                  `Estoque: ${product.stock} unidades disponíveis`
+                )}
+              </Card.Text>
+              <Card.Text className="product-sizes">
+                <span>Tamanhos disponíveis:</span>
+                <div className="size-bullets">
+                  {product.sizes.map((size, index) => (
+                    <span key={index} className="size-bullet">
+                      {size}
+                    </span>
+                  ))}
+                </div>
+              </Card.Text>
+              <Card.Text className="product-colors">
+                <span>Cores disponíveis:</span>
+                <div className="color-bullets">
+                  {product.colors.map((color, index) => (
+                    <span
+                      key={index}
+                      className="color-bullet"
+                      style={{ backgroundColor: color }}
+                    ></span>
+                  ))}
+                </div>
+              </Card.Text>
+              {userEmail === 'adm@adm.com' ? (
+                <div className="button-container d-flex justify-content-between w-100">
+                  <Button
+                    className="btn btn-editar"
+                    onClick={() => handleEdit(product)}
+                  >
+                    <i className="fas fa-edit"></i> Editar
+                  </Button>
+                  <Button
+                    className="btn btn-danger"
+                    onClick={() => handleDeleteModal(product)}
+                  >
+                    <i className="fas fa-trash"></i> Excluir
+                  </Button>
+                </div>
+              ) : (
+                <div className="button-container">
+                  {product.stock === 0 ? (
+                    <Button
+                      className="btn btn-warning encomendar"
+                      onClick={() => handlePreOrder(product)}
+                    >
+                      Encomendar
+                    </Button>
+                  ) : (
+                    <Button
+                      className="btn btn-primary add-to-cart"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Selecionar Produto
+                    </Button>
+                  )}
+                </div>
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+
 
       {/* Modal para exibir as imagens do produto selecionado */}
       <Modal show={showImageModal} onHide={closeImageModal} size="lg" centered>

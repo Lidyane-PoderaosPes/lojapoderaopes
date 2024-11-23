@@ -97,21 +97,28 @@ const Home = () => {
               <Carousel.Item key={idx}>
                 <div className="d-flex justify-content-center flex-wrap">
                   {items.map((product) => (
-                    <Card className="product-card text-center mx-2" key={product.id} style={{ width: '200px', height: '350px' }}>
+                    <Card 
+                    className="product-cards text-center mx-2" 
+                    key={product.id} 
+                    style={{ width: '320px', height: '540px' }}
+                  >
+                    <div className="image-container">
                       <Card.Img
                         variant="top"
                         src={product.imageUrls[0]}
                         className="product-image"
                         alt={product.name}
                         onClick={() => openImageModal(product.imageUrls)}
-                        style={{ cursor: 'pointer', objectFit: 'cover', height: '150px' }}
+                        style={{ cursor: 'pointer' }}
                       />
-                      <Card.Body>
-                        <Card.Title className="product-name">{product.name}</Card.Title>
-                        <Card.Text className="product-price">Preço: R$ {product.price.toFixed(2)}</Card.Text>
-                        <Card.Text className="product-description">{product.description}</Card.Text>
-                      </Card.Body>
-                    </Card>
+                    </div>
+                    <Card.Body>
+                      <Card.Title className="product-name">{product.name}</Card.Title>
+                      <Card.Text className="product-price">Preço: R$ {product.price.toFixed(2)}</Card.Text>
+                      <Card.Text className="product-description">{product.description}</Card.Text>
+                    </Card.Body>
+                  </Card>
+                  
                   ))}
                 </div>
               </Carousel.Item>

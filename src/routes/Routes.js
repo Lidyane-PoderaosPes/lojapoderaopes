@@ -9,7 +9,8 @@ import NotFound from '../components/NotFound';
 import SoldProducts from '../components/SoldProducts';
 import Navbar from '../components/Navbar';
 import About from '../components/About';
-import Footer from '../components/Footer'; // Importando o Footer
+import MyOrders from '../components/MyOrders';
+
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { CartProvider } from '../context/CartContext'; // Certifique-se de que o caminho está correto
 
@@ -47,6 +48,7 @@ const AppRoutes = () => {
           <Route path="/auth" element={<Auth onLogin={setUser} />} />
           <Route path="/about" element={<About />} />
           <Route path="/sold-products" element={user ? <SoldProducts /> : <Auth onLogin={setUser} />} />
+          <Route path="/my-orders" element={<MyOrders user={user} />} />
           <Route path="*" element={<NotFound />} />
         </RouterRoutes>
       

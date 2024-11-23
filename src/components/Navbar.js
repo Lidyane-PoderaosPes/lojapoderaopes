@@ -80,7 +80,8 @@ const Navbar = ({ user }) => {
               </>
             )}
 
-            {user && user.email !== 'adm@adm.com' && (
+          {user && user.email !== 'adm@adm.com' && (
+            <>
               <li className="nav-item">
                 <Link className="nav-link custom-link" to="/cart" aria-label="Carrinho">
                   Carrinho
@@ -90,7 +91,13 @@ const Navbar = ({ user }) => {
                   )}
                 </Link>
               </li>
-            )}
+              <li className="nav-item">
+                <Link className="nav-link custom-link" to="/my-orders" aria-label="Meus Pedidos">
+                  Meus Pedidos
+                </Link>
+              </li>
+            </>
+          )}
 
             {user ? (
               <>
