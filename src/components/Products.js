@@ -26,12 +26,29 @@ const Products = ({ updateCartCount }) => {
   const [zoomStyles, setZoomStyles] = useState({});
   const [filterName, setFilterName] = useState('');
   const [filterPriceRange, setFilterPriceRange] = useState([0, Infinity]);
+  const [showFilters, setShowFilters] = useState(false);
 
-  const filteredProducts = products.filter(product => {
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const filteredProductss = products.filter(product => {
     const matchesName = product.name.toLowerCase().includes(filterName.toLowerCase());
     const matchesPrice = product.price >= filterPriceRange[0] && product.price <= filterPriceRange[1];
     return matchesName && matchesPrice;
   });
+
+  const toggleFilters = () => {
+    setShowFilters(!showFilters);
+  };
+
+  const applyFilters = () => {
+    const filtered = products.filter((product) => {
+      const matchesName = product.name.toLowerCase().includes(filterName.toLowerCase());
+      const matchesPrice =
+        product.price >= filterPriceRange[0] && product.price <= filterPriceRange[1];
+      return matchesName && matchesPrice;
+    });
+    setFilteredProducts(filtered);
+  };
   
 
   const openImageModal = (images) => {
@@ -159,9 +176,16 @@ const Products = ({ updateCartCount }) => {
 
   return (
     <div className="product-container">
+      <div style={{display: 'flex', justifyContent: 'center', gap: 65}}>
+        <Button variant="primary" className="mb-2  " onClick={toggleFilters}>
+          {showFilters ? 'Ocultar Busca' : 'Fazer Busca'}
+        </Button>
+        <h1>Produtos</h1>
+      </div>
+      
 
-      <div className="filters-container">
-        
+      {showFilters && (
+        <div className="filters-container mb-4">
           <input
             type="text"
             placeholder="Buscar por nome"
@@ -169,31 +193,32 @@ const Products = ({ updateCartCount }) => {
             onChange={(e) => setFilterName(e.target.value)}
             className="filter-input"
           />
-      
-
-      
-          
           <div className="price-inputs">
-          <label className="filter-label">Faixa de preço:</label>
+            <label className="filter-label">Faixa de preço:</label>
             <input
               type="number"
               placeholder="Mínimo"
-              onChange={(e) => setFilterPriceRange([+e.target.value || 0, filterPriceRange[1]])}
+              onChange={(e) =>
+                setFilterPriceRange([+e.target.value || 0, filterPriceRange[1]])
+              }
               className="price-input"
             />
             <span className="price-separator">-</span>
             <input
               type="number"
               placeholder="Máximo"
-              onChange={(e) => setFilterPriceRange([filterPriceRange[0], +e.target.value || Infinity])}
+              onChange={(e) =>
+                setFilterPriceRange([filterPriceRange[0], +e.target.value || Infinity])
+              }
               className="price-input"
             />
-             <h1 className="text-center ">Produtos</h1>
           </div>
-         
-       
-        
-      </div>
+          <Button variant="success" onClick={applyFilters}>
+            Buscar
+          </Button>
+        </div>
+      )}
+
 
 
 
@@ -205,7 +230,7 @@ const Products = ({ updateCartCount }) => {
       )}
 
     <Row className="justify-content-center">
-      {filteredProducts.map((product) => (
+      {filteredProductss.map((product) => (
         <Col md={4} key={product.id} className="mb-4 d-flex justify-content-center">
           <Card className="product-card shadow-sm">
             <div className="image-container">
