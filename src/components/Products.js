@@ -177,7 +177,7 @@ const Products = ({ updateCartCount }) => {
   return (
     <div className="product-container">
       <div style={{display: 'flex', justifyContent: 'center', gap: 65}}>
-        <Button variant="primary" className="mb-2  " onClick={toggleFilters}>
+        <Button  style={{backgroundColor: '#ebaaeb',  padding: '10px 20px', border: 'none', color: 'black', marginBottom: '15px'}} onClick={toggleFilters}>
           {showFilters ? 'Ocultar Busca' : 'Fazer Busca'}
         </Button>
         <h1>Produtos</h1>
@@ -195,29 +195,29 @@ const Products = ({ updateCartCount }) => {
           />
           <div className="price-inputs">
             <label className="filter-label">Faixa de preço:</label>
-            <input
-              type="number"
-              placeholder="Mínimo"
-              onChange={(e) =>
-                setFilterPriceRange([+e.target.value || 0, filterPriceRange[1]])
-              }
-              className="price-input"
-            />
-            <span className="price-separator">-</span>
-            <input
-              type="number"
-              placeholder="Máximo"
-              onChange={(e) =>
-                setFilterPriceRange([filterPriceRange[0], +e.target.value || Infinity])
-              }
-              className="price-input"
-            />
+            <div className="price-range">
+              <input
+                type="number"
+                placeholder="Mínimo"
+                onChange={(e) =>
+                  setFilterPriceRange([+e.target.value || 0, filterPriceRange[1]])
+                }
+                className="price-input"
+              />
+              <span className="price-separator">-</span>
+              <input
+                type="number"
+                placeholder="Máximo"
+                onChange={(e) =>
+                  setFilterPriceRange([filterPriceRange[0], +e.target.value || Infinity])
+                }
+                className="price-input"
+              />
+            </div>
           </div>
-          <Button variant="success" onClick={applyFilters}>
-            Buscar
-          </Button>
         </div>
       )}
+
 
 
 
