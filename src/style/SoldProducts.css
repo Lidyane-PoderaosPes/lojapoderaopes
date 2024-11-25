@@ -51,3 +51,32 @@
     margin-right: 8px;
   }
   
+
+  .checkbox-label{
+    display: flex;
+
+    gap: 10px;
+  }
+
+  .status-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .status-label {
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    align-items: center;
+  }
+  
+  .status-select {
+    margin-left: 8px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  

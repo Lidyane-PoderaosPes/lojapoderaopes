@@ -5,6 +5,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../data/firebaseConfig';
 import emailjs from 'emailjs-com';
 import qrCodePix from '../assets/qrcode-pix.png'; // Importe a imagem do QR code
+import mercado from '../assets/mercado.png';
 
 // Mapeamento de cores
 const colorNames = {
@@ -55,14 +56,14 @@ const BankTransferPayment = () => (
 
 const BoletoPayment = () => (
   <div>
-    <h5>Boleto Bancário</h5>
-    <p>Um boleto será gerado ao finalizar a compra. Você poderá pagá-lo em qualquer banco ou lotérica.</p>
+    <h5>Boleto Bancário ( Mercado Pago) <img src={mercado} alt="Logo" style={{ width: '120px', height: '70px' }} /></h5>
+    <p>Ao acessar o link poderá escolher pela opção de gerar um boleto após poderá finalizar a compra. Você poderá pagá-lo em qualquer banco ou lotérica.</p>
   </div>
 );
 
 const DigitalWalletPayment = () => (
   <div>
-    <h5>Carteiras Digitais (PicPay, Mercado Pago)</h5>
+    <h5>Carteiras Digitais ( Mercado Pago) <img src={mercado} alt="Logo" style={{ width: '120px', height: '70px' }} /></h5>
     <p>Transfira o valor para a nossa conta na carteira digital:</p>
     <p><strong>Usuário:</strong> @nomeusuario</p>
   </div>
@@ -246,14 +247,38 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems,totalW
         <option value="boleto">Boleto Bancário</option>
         <option value="digitalWallet">Carteira Digital</option>
       </Form.Select>
-
+  
       <div style={{ marginTop: '20px' }}>
         {paymentMethod === 'pix' && <PixPayment />}
         {paymentMethod === 'bankTransfer' && <BankTransferPayment />}
-        {paymentMethod === 'boleto' && <BoletoPayment />}
-        {paymentMethod === 'digitalWallet' && <DigitalWalletPayment />}
+        {paymentMethod === 'boleto' && (
+          <div>
+            <BoletoPayment />
+            <a
+              href="https://link.mercadopago.com.br/poderaaospes"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'block', marginTop: '10px', color: '#007bff', textDecoration: 'none' }}
+            >
+              Gerar Boleto
+            </a>
+          </div>
+        )}
+        {paymentMethod === 'digitalWallet' && (
+          <div>
+            <DigitalWalletPayment />
+            <a
+              href="https://link.mercadopago.com.br/poderaaospes"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'block', marginTop: '10px', color: '#007bff', textDecoration: 'none' }}
+            >
+              Acessar Carteira Digital
+            </a>
+          </div>
+        )}
       </div>
-
+  
       {(paymentMethod === 'bankTransfer' || paymentMethod === 'pix' || paymentMethod === 'digitalWallet') && (
         <div style={{ marginTop: '20px' }}>
           <Form.Group controlId="formFile">
@@ -274,10 +299,9 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems,totalW
           )}
         </div>
       )}
-
-
-      <div className='centr'>
-      <Button
+  
+      <div className="centr">
+        <Button
           className="botao-purchases"
           onClick={() => finalizePurchase()}
           style={{ marginTop: '20px' }}
@@ -290,8 +314,7 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems,totalW
           )}
         </Button>
       </div>
-      
-
+  
       <Toast
         onClose={() => setShowToast(false)}
         show={showToast}
@@ -302,13 +325,14 @@ const FinalizePurchase = ({ user, cartItems, calculateTotal, setCartItems,totalW
           bottom: 20,
           right: 20,
           backgroundColor: '#333',
-          color: '#fff'
+          color: '#fff',
         }}
       >
         <Toast.Body>{toastMessage}</Toast.Body>
       </Toast>
     </div>
   );
+  
 };
 
 export default FinalizePurchase;
