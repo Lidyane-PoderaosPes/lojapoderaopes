@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
@@ -12,6 +12,7 @@ const Navbar = ({ user }) => {
   const { cartItems } = useCart();
   const auth = getAuth();
   const navigate = useNavigate();
+  const [showEditProfile, setShowEditProfile] = useState(false);
 
   const handleLogout = () => {
     signOut(auth)
@@ -22,6 +23,12 @@ const Navbar = ({ user }) => {
       .catch((error) => {
         console.error('Erro ao fazer logout', error);
       });
+  };
+
+  // Função para fechar o modal
+  const handleProfileUpdate = () => {
+    setShowEditProfile(false);
+    window.location.reload(); // Atualiza a página para refletir as mudanças.
   };
 
   return (
@@ -99,13 +106,23 @@ const Navbar = ({ user }) => {
             </>
           )}
 
+        {user && (
+          <>
+            <li className="nav-item">                                       
+                   <Link 
+                    className="nav-link custom-link" 
+                    style={{cursor: 'pointer'}}
+                    onClick={() => setShowEditProfile(true)}
+                    to="/EditProfile"
+                    >
+                    {user.displayName ? `Olá, ${user.displayName}` : 'Olá, Usuário'}
+                  </Link>                            
+            </li>
+          </>
+        )}
+
             {user ? (
               <>
-                <li className="nav-item">
-                  <span className="nav-link custom-link">
-                    {user.displayName ? `Olá, ${user.displayName}` : 'Olá, Usuário'}
-                  </span>
-                </li>
                 <li className="nav-item">
                   <button className="btn custom-btn-logout" onClick={handleLogout}>
                     Logout

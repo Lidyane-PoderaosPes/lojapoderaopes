@@ -1,0 +1,67 @@
+.edit-profile-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .edit-profile-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .edit-profile-form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .edit-profile-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .edit-profile-form .form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .edit-profile-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .edit-user {
+    background-color: '#ebaaeb';
+    padding: '10px 20px'; 
+    border: 'none'; 
+    color: 'black'; 
+    margin-bottom: '15px';
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  .edit-user:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .text-danger {
+    color: red;
+    text-align: center;
+  }
+  
+  .text-success {
+    color: green;
+    text-align: center;
+  }
+  

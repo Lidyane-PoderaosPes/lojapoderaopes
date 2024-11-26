@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button, Alert, Modal } from 'react-bootstrap';
-import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, deleteDoc, addDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { db, auth } from '../data/firebaseConfig';
@@ -11,7 +11,7 @@ import EditProductModal from './EditProductModal';
 import DeleteProductModal from './DeleteProductModal';
 import CartModal from './CartModal';
 
-const Products = ({ updateCartCount }) => {
+const Products = ({ updateCartCount, product }) => {
   const [products, setProducts] = useState([]);
   const [userEmail, setUserEmail] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -27,8 +27,11 @@ const Products = ({ updateCartCount }) => {
   const [filterName, setFilterName] = useState('');
   const [filterPriceRange, setFilterPriceRange] = useState([0, Infinity]);
   const [showFilters, setShowFilters] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const filteredProductss = products.filter(product => {
     const matchesName = product.name.toLowerCase().includes(filterName.toLowerCase());
@@ -167,9 +170,30 @@ const Products = ({ updateCartCount }) => {
     }
   };
 
-  const handlePreOrder = (product) => {
-    console.log(`Produto ${product.name} encomendado!`);
-    // Insira a lógica de envio de pedidos ou qualquer outra funcionalidade necessária.
+ 
+
+  const handlePreOrder = async () => {
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      // Adicionar dados do produto na coleção "encomendas"
+      await addDoc(collection(db, "encomendas"), {
+        ...product,
+        preOrderFee: "R$10,00", // Exemplo de taxa fixa
+        availableIn: "10 dias", // Disponibilidade
+        createdAt: new Date().toISOString(),
+      });
+
+      setSuccess("Encomenda realizada com sucesso!");
+    } catch (err) {
+      setError("Erro ao processar a encomenda. Tente novamente.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+      setShowModal(false); // Fechar o modal após confirmação
+    }
   };
   
 
@@ -296,11 +320,11 @@ const Products = ({ updateCartCount }) => {
                 <div className="button-container">
                   {product.stock === 0 ? (
                     <Button
-                      className="btn btn-warning encomendar"
-                      onClick={() => handlePreOrder(product)}
-                    >
-                      Encomendar
-                    </Button>
+                    className="btn btn-warning encomendar"
+                    onClick={() => setShowModal(true)}
+                  >
+                    Encomendar
+                  </Button>
                   ) : (
                     <Button
                       className="btn btn-primary add-to-cart"
@@ -316,6 +340,36 @@ const Products = ({ updateCartCount }) => {
         </Col>
       ))}
     </Row>
+
+      {/* Modal de Confirmação */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmação de Encomenda</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Será cobrada uma taxa de <strong>R$10,00</strong> para esta encomenda.
+          </p>
+          <p>
+            O produto estará disponível em <strong>10 dias</strong>.
+          </p>
+          <p>Deseja confirmar a encomenda do produto <strong></strong>?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" style={{width: '100%'}} onClick={() => setShowModal(false)}>
+            Cancelar
+          </Button>
+          <Button
+            variant="warning"
+            onClick={handlePreOrder}
+            disabled={loading}
+          >
+            {loading ? "Processando..." : "Confirmar Encomenda"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+    
 
 
       {/* Modal para exibir as imagens do produto selecionado */}
