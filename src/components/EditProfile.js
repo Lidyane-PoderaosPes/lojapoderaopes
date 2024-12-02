@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth, updateProfile } from 'firebase/auth';
+import { getAuth, updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../data/firebaseConfig';
 import Spinner from 'react-bootstrap/Spinner'; // Para exibir carregamento
@@ -14,6 +14,8 @@ const EditProfile = ({ user, onUpdate }) => {
     cpf: '',
     email: '',
     phone: '',
+    currentPassword: '', // Para senha atual
+    newPassword: '', // Para nova senha
   });
 
   const [loading, setLoading] = useState(true); // Estado inicial de carregamento
@@ -29,6 +31,7 @@ const EditProfile = ({ user, onUpdate }) => {
       if (!querySnapshot.empty) {
         const userData = querySnapshot.docs[0].data();
         setFormData({
+          ...formData,
           firstName: userData.Firstname || '',
           lastName: userData.Secondname || '',
           address: userData.address || '',
@@ -85,13 +88,27 @@ const EditProfile = ({ user, onUpdate }) => {
           cpf: formData.cpf,
           phone: formData.phone,
         });
-        setSuccess('Dados atualizados com sucesso!');
-        if (onUpdate) onUpdate(); // Atualiza os dados no componente pai
       } else {
         setError('Erro ao atualizar dados. Usuário não encontrado.');
       }
+
+      // Alterar a senha se os campos de senha forem preenchidos
+      if (formData.currentPassword && formData.newPassword) {
+        const credential = EmailAuthProvider.credential(user.email, formData.currentPassword);
+
+        // Reautenticar o usuário
+        await reauthenticateWithCredential(auth.currentUser, credential);
+
+        // Atualizar a senha
+        await updatePassword(auth.currentUser, formData.newPassword);
+        setSuccess('Dados e senha atualizados com sucesso!');
+      } else {
+        setSuccess('Dados atualizados com sucesso!');
+      }
+
+      if (onUpdate) onUpdate(); // Atualiza os dados no componente pai
     } catch (err) {
-      setError('Erro ao salvar os dados. Tente novamente.');
+      setError('Erro ao salvar os dados. Verifique suas informações e tente novamente.');
       console.error(err);
     } finally {
       setLoading(false);
@@ -123,11 +140,34 @@ const EditProfile = ({ user, onUpdate }) => {
               value={formData[field]}
               onChange={handleChange}
               required={field !== 'email'} // Email é apenas leitura
-              disabled={field === 'email'|| field === 'cpf'} // Email não pode ser editado
-              
+              disabled={field === 'email' || field === 'cpf'} // Email e CPF não podem ser editados
             />
           </div>
         ))}
+
+        {/* Campos de senha */}
+        <div className="form-group">
+          <label htmlFor="currentPassword">SENHA ATUAL</label>
+          <input
+            type="password"
+            id="currentPassword"
+            name="currentPassword"
+            className="form-control"
+            value={formData.currentPassword}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="newPassword">NOVA SENHA</label>
+          <input
+            type="password"
+            id="newPassword"
+            name="newPassword"
+            className="form-control"
+            value={formData.newPassword}
+            onChange={handleChange}
+          />
+        </div>
 
         {/* Feedback */}
         {error && <p className="text-danger">{error}</p>}

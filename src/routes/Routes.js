@@ -11,6 +11,7 @@ import Navbar from '../components/Navbar';
 import About from '../components/About';
 import MyOrders from '../components/MyOrders';
 import EditProfile from '../components/EditProfile';
+import ForgotPassword from '../components/ForgotPassword'
 
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { CartProvider } from '../context/CartContext'; // Certifique-se de que o caminho está correto
@@ -45,6 +46,7 @@ const AppRoutes = () => {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/add-product" element={user ? <AddProduct /> : <Auth onLogin={setUser} />} />
+          <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/auth" element={<Auth onLogin={setUser} />} />
           <Route path="/about" element={<About />} />

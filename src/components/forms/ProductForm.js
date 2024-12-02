@@ -121,7 +121,7 @@ const ProductForm = ({ product, onChange, onFileChange, message }) => {
         <div className="form-group col-md-6">
           <label>Números Disponíveis:</label>
           <div className="checkbox-group">
-            {['34', '35', '36', '37', '38', '39'].map((size) => (
+            {['34', '35', '36', '37', '38', '39', '40', '41', '42'].map((size) => (
               <div key={size} className="form-check">
                 <input
                   type="checkbox"
