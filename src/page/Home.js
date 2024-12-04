@@ -87,7 +87,7 @@ const Home = () => {
           <p className="text-center">Carregando produtos...</p>
         ) : (
           <Carousel
-            interval={10000}
+            interval={20000}
             controls
             indicators
             nextIcon={<span className="carousel-arrow carousel-arrow-next">&rsaquo;</span>}
@@ -95,12 +95,12 @@ const Home = () => {
           >
             {groupedProducts.map((items, idx) => (
               <Carousel.Item key={idx}>
-                <div className="d-flex justify-content-center flex-wrap">
-                  {items.map((product) => (
-                    <Card 
+              <div className="d-flex justify-content-center flex-wrap">
+                {items.map((product) => (
+                  <Card 
                     className="product-cards text-center mx-2" 
                     key={product.id} 
-                    style={{ width: '320px', height: '540px' }}
+                    style={{ width: '360px', height: '560px' }}
                   >
                     <div className="image-container">
                       <Card.Img
@@ -118,10 +118,10 @@ const Home = () => {
                       <Card.Text className="product-description">{product.description}</Card.Text>
                     </Card.Body>
                   </Card>
-                  
-                  ))}
-                </div>
-              </Carousel.Item>
+                ))}
+              </div>
+            </Carousel.Item>
+            
             ))}
           </Carousel>
         )}
