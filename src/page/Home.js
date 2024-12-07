@@ -97,7 +97,7 @@ const Home = () => {
               <Carousel.Item key={idx}>
               <div className="d-flex justify-content-center flex-wrap">
                 {items.map((product) => (
-                  <Card 
+                 <Card 
                     className="product-cards text-center mx-2" 
                     key={product.id} 
                     style={{ width: '360px', height: '560px' }}
@@ -109,7 +109,7 @@ const Home = () => {
                         className="product-image"
                         alt={product.name}
                         onClick={() => openImageModal(product.imageUrls)}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', width: '100%', height: '100%', objectFit: 'cover' }} // Adicionado para padronizar o tamanho
                       />
                     </div>
                     <Card.Body>
@@ -118,6 +118,7 @@ const Home = () => {
                       <Card.Text className="product-description">{product.description}</Card.Text>
                     </Card.Body>
                   </Card>
+                  
                 ))}
               </div>
             </Carousel.Item>

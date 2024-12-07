@@ -25,30 +25,31 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilos da Imagem */
+/* Imagem nos Cards */
 .image-container {
+  width: 95%;
+  height: 269px; /* Altura fixa para manter a proporção */
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 120%;
-  width: 100%;
-  overflow: hidden;
-  margin-top: 10px;
+  margin-left: 7px;
+  margin-top: 5px;
 }
 
 .product-image {
-  max-height: 100%;
-  max-width: 100%;
-  object-fit: cover;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  width: 90%;
+  height: 100%;
+  object-fit: cover; /* Padroniza o ajuste */
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* Estilos do Conteúdo */
 .product-name {
   font-size: 1.2em;
   font-weight: bold;
-  margin: 10px 0;
+  margin: 1px 0;
   text-align: center;
   font-family: 'Playfair Display', serif;
 }

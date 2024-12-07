@@ -78,20 +78,24 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Imagem nos Cards */
 .image-container {
+  width: 100%;
+  height: 269px; /* Altura fixa para manter a proporção */
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 269px;
 }
 
 .product-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Padroniza o ajuste */
   border-radius: 5px;
   cursor: pointer;
 }
+
 
 .product-name {
   font-weight: bold;
